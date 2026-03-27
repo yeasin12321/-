@@ -34,6 +34,7 @@
         body.dark-theme .modal-content { background: #1e293b; color: #fff; }
         body.dark-theme .modal-bio { background: #334155; color: #cbd5e1; }
         body.dark-theme .map-container { border-color: #1e293b; }
+        body.dark-theme .form-control { background: #334155; color: #fff; border-color: #475569; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind Siliguri', sans-serif; }
         body { background: var(--light); color: var(--dark); line-height: 1.8; overflow-x: hidden; scroll-behavior: smooth; transition: background 0.3s ease; }
@@ -52,7 +53,7 @@
         .logo { font-size: 26px; font-weight: 700; color: var(--primary); }
         
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        .nav-links { display: flex; list-style: none; }
+        .nav-links { display: flex; list-style: none; flex-wrap: wrap; justify-content: flex-end;}
         .nav-links li a { 
             text-decoration: none; color: var(--dark); margin-left: 15px; 
             font-weight: 600; transition: var(--transition); font-size: 0.95rem;
@@ -104,23 +105,61 @@
         #notice .card { border-left: 6px solid var(--notice-accent); text-align: left; }
         #notice .card i { color: var(--notice-accent); }
 
+        /* Leaderboard Styles */
+        .rank-badge { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; margin: 0 auto 15px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .gold { background: linear-gradient(135deg, #FFD700, #FDB931); }
+        .silver { background: linear-gradient(135deg, #E0E0E0, #9E9E9E); }
+        .bronze { background: linear-gradient(135deg, #CD7F32, #A0522D); }
+
+        /* Help Portal Styles */
+        .help-form { text-align: left; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
+        .form-control { width: 100%; padding: 12px 15px; border: 2px solid rgba(0,0,0,0.1); border-radius: 10px; font-size: 1rem; font-family: inherit; transition: 0.3s; background: #fafafa; }
+        .form-control:focus { outline: none; border-color: var(--primary); background: transparent; }
+        .btn-submit { width: 100%; padding: 15px; background: var(--secondary); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-submit:hover { background: var(--primary); box-shadow: 0 5px 15px rgba(0,119,182,0.3); }
+
+        /* Interactive Map Styles */
+        .interactive-map-wrapper { 
+            position: relative; width: 100%; max-width: 1000px; height: 450px; margin: 0 auto 50px; 
+            background: rgba(0, 119, 182, 0.03); border-radius: 20px; border: 2px dashed var(--primary); 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .map-bg-img { position: absolute; width: 100%; height: 100%; object-fit: contain; opacity: 0.15; z-index: 1; }
+        .map-pin { 
+            position: absolute; width: 24px; height: 24px; background: var(--notice-accent); 
+            border-radius: 50%; cursor: pointer; z-index: 2; animation: pulse 2s infinite; 
+            display: flex; justify-content: center; align-items: center; color: white; font-size: 10px;
+        }
+        .map-pin::after { 
+            content: attr(data-info); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); 
+            background: var(--dark); color: white; padding: 8px 15px; border-radius: 8px; font-size: 0.9rem; 
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s; font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .map-pin::before {
+            content: ''; position: absolute; bottom: 80%; left: 50%; transform: translateX(-50%);
+            border-width: 6px; border-style: solid; border-color: var(--dark) transparent transparent transparent;
+            opacity: 0; transition: 0.3s;
+        }
+        .map-pin:hover::after, .map-pin:hover::before { opacity: 1; bottom: 150%; }
+        .map-pin:hover::before { bottom: 100%; }
+        
+        @keyframes pulse { 
+            0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.6); } 
+            70% { box-shadow: 0 0 0 15px rgba(230, 57, 70, 0); } 
+            100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); } 
+        }
+
         /* Team & Members */
         .team-card { cursor: pointer; }
         .team-card img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--light); transition: var(--transition); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .team-card:hover img { border-color: var(--secondary); transform: scale(1.05); }
         .role { color: var(--secondary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
 
-        /* Map Container */
-        .map-container {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 5px solid #fff;
-            transition: var(--transition);
-        }
+        /* Map Container (Old Iframe) */
+        .map-container { width: 100%; max-width: 1000px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); border: 5px solid #fff; transition: var(--transition); }
 
         /* Premium Modal */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(29, 53, 87, 0.95); backdrop-filter: blur(10px); overflow-y: auto; }
@@ -133,23 +172,11 @@
         .contact-links a { font-size: 32px; transition: var(--transition); }
         .contact-links a:hover { transform: translateY(-5px); }
 
-        /* Floating Buttons (Back to Top & WhatsApp) */
-        .floating-btn-container {
-            position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 1000;
-        }
-        
-        #backToTop { 
-            width: 50px; height: 50px; background: var(--primary); color: #fff; border-radius: 50%; 
-            display: none; justify-content: center; align-items: center; cursor: pointer; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; font-size: 20px;
-        }
+        /* Floating Buttons */
+        .floating-btn-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+        #backToTop { width: 50px; height: 50px; background: var(--primary); color: #fff; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; font-size: 20px; }
         #backToTop:hover { transform: scale(1.1); background: var(--secondary); }
-
-        .floating-whatsapp {
-            width: 55px; height: 55px; background: #25D366; color: white; border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; font-size: 32px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; text-decoration: none;
-        }
+        .floating-whatsapp { width: 55px; height: 55px; background: #25D366; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; text-decoration: none; }
         .floating-whatsapp:hover { transform: scale(1.1); color: white; }
 
         footer { background: #111; color: #fff; padding: 70px 8% 30px; text-align: center; }
@@ -161,10 +188,7 @@
             .menu-toggle { display: block; }
             .hero h1 { font-size: 3rem; }
             .section { padding: 80px 5%; }
-            .nav-links.active { 
-                display: flex; position: fixed; top: 80px; left: 0; width: 100%; 
-                background: var(--glass); flex-direction: column; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-            }
+            .nav-links.active { display: flex; position: fixed; top: 80px; left: 0; width: 100%; background: var(--glass); flex-direction: column; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
             .nav-links.active li { margin: 15px 0; }
         }
     </style>
@@ -183,11 +207,10 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" data-i18n="nav_home">হোম</a></li>
                 <li><a href="#notice" data-i18n="nav_notice">বিজ্ঞপ্তি</a></li>
-                <li><a href="#vision" data-i18n="nav_vision">লক্ষ্য</a></li>
                 <li><a href="#plan" data-i18n="nav_plan">পরিকল্পনা</a></li>
-                <li><a href="#contribution" data-i18n="nav_contrib">অবদান</a></li>
+                <li><a href="#leaderboard" data-i18n="nav_leaderboard">লিডারবোর্ড</a></li>
+                <li><a href="#help-portal" data-i18n="nav_help">হেল্প পোর্টাল</a></li>
                 <li><a href="#about" data-i18n="nav_team">টিম</a></li>
-                <li><a href="#social" data-i18n="nav_network">নেটওয়ার্ক</a></li>
                 <li><a href="#location" data-i18n="nav_location">লোকেশন</a></li>
             </ul>
             <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
@@ -215,6 +238,57 @@
         <div id="plan-data" class="grid-container" data-aos="fade-up"></div>
     </section>
 
+    <section id="leaderboard" class="section bg-white">
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_leaderboard">মাসের সেরা <span>স্বেচ্ছাসেবক</span></h2>
+        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="leaderboard_sub">যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম</p>
+        <div class="grid-container" data-aos="fade-up">
+            <div class="card">
+                <div class="rank-badge gold"><i class="fas fa-trophy"></i></div>
+                <h3>আসিফ ইকবাল</h3>
+                <p data-i18n="leader_work1">সর্বাধিক প্রজেক্ট সম্পন্ন করেছেন</p>
+            </div>
+            <div class="card">
+                <div class="rank-badge silver"><i class="fas fa-medal"></i></div>
+                <h3>মেহেদী হাসান</h3>
+                <p data-i18n="leader_work2">সেরা ফান্ড রেইজার</p>
+            </div>
+            <div class="card">
+                <div class="rank-badge bronze"><i class="fas fa-award"></i></div>
+                <h3>ফারিহা তাসনিম</h3>
+                <p data-i18n="leader_work3">সেরা ক্যাম্পেইন অর্গানাইজার</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="help-portal" class="section">
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_help">সাহায্যের <span>আবেদন</span></h2>
+        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="help_sub">আপনার আশেপাশে কোনো শিশুর সাহায্য প্রয়োজন হলে আমাদের জানান</p>
+        <div class="card" style="max-width: 600px; margin: 0 auto; padding: 40px;" data-aos="zoom-in">
+            
+            <form action="https://formsubmit.co/yeasinkabir0000@gmail.com" method="POST" class="help-form">
+                
+                <input type="hidden" name="_subject" value="Shohojatri Help Portal theke Notun Abedon!">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="form-group">
+                    <label data-i18n="form_name">আপনার নাম (ঐচ্ছিক)</label>
+                    <input type="text" name="Name" class="form-control" placeholder="নাম গোপন রাখতে চাইলে ফাঁকা রাখুন">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="form_area">এলাকা / লোকেশন *</label>
+                    <input type="text" name="Location" class="form-control" required placeholder="যেমন: কালিগঞ্জ, সাতক্ষীরা">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="form_details">সমস্যার বিবরণ *</label>
+                    <textarea name="Details" class="form-control" rows="4" required placeholder="বিস্তারিত লিখুন..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit" data-i18n="btn_submit">আবেদন জমা দিন</button>
+            </form>
+
+        </div>
+    </section>
+
     <section id="contribution" class="section bg-white">
         <h2 class="section-title" data-aos="fade-up" data-i18n="sec_contrib">আমাদের <span>অবদান</span></h2>
         <div id="contribution-data" class="grid-container" data-aos="fade-up"></div>
@@ -234,6 +308,17 @@
     <section id="location" class="section">
         <h2 class="section-title" data-aos="fade-up" data-i18n="sec_location">আমাদের <span>লোকেশন</span></h2>
         <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="location_sub">আমরা যেখানে আমাদের কার্যক্রম পরিচালনা করছি</p>
+        
+        <h3 style="margin-bottom: 20px; font-weight: 600; color: var(--primary);" data-i18n="map_interactive_title">লাইভ ইমপ্যাক্ট ম্যাপ</h3>
+        <div class="interactive-map-wrapper" data-aos="fade-up">
+            <h2 style="position:absolute; z-index:0; opacity:0.1; font-size:4rem; text-transform:uppercase; font-weight:700;">Satkhira</h2>
+            <div class="map-pin" data-info="শ্যামনগর: শিক্ষা সামগ্রী বিতরণ" style="top: 30%; left: 40%;"><i class="fas fa-star"></i></div>
+            <div class="map-pin" data-info="কালিগঞ্জ: সাইবার সেফটি ওয়ার্কশপ" style="top: 60%; left: 70%;"><i class="fas fa-shield-alt"></i></div>
+            <div class="map-pin" data-info="আশাশুনি: মানসিক স্বাস্থ্য ক্যাম্প" style="top: 50%; left: 25%;"><i class="fas fa-heart"></i></div>
+            <div class="map-pin" data-info="সাতক্ষীরা সদর: পথশিশু খাদ্য বিতরণ" style="top: 45%; left: 55%;"><i class="fas fa-utensils"></i></div>
+        </div>
+
+        <h3 style="margin: 40px 0 20px; font-weight: 600; color: var(--primary);" data-i18n="map_office_title">আমাদের অফিস লোকেশন</h3>
         <div class="map-container" data-aos="zoom-in">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117621.57917719602!2d88.98801265!3d22.721471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff5c0c9d7c30ab%3A0xc00e12d1b822d56c!2sSatkhira!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
@@ -241,7 +326,7 @@
 
     <div id="profileModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal()">×</span>
             <img id="modalImg" class="modal-img" src="">
             <h2 id="modalName"></h2>
             <span id="modalRole" class="role"></span>
@@ -265,7 +350,7 @@
         <div class="footer-logo" data-i18n="logo">সহযাত্রী</div>
         <p style="max-width: 600px; margin: 0 auto 30px; opacity: 0.8;" data-i18n="footer_text">শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।</p>
         <div style="border-top: 1px solid #333; padding-top: 30px; font-size: 0.9rem; opacity: 0.6;" data-i18n="footer_copy">
-            &copy; ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।
+            © ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।
         </div>
     </footer>
 
@@ -276,14 +361,14 @@
         const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
         let fullTeamData = [];
 
-        // Translation Dictionary Updated with Location
+        // Updated Translations 
         const translations = {
             bn: {
                 page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে",
                 logo: "সহযাত্রী",
                 nav_home: "হোম", nav_notice: "বিজ্ঞপ্তি", nav_vision: "লক্ষ্য", 
                 nav_plan: "পরিকল্পনা", nav_contrib: "অবদান", nav_team: "টিম", nav_network: "নেটওয়ার্ক",
-                nav_location: "লোকেশন",
+                nav_location: "লোকেশন", nav_leaderboard: "লিডারবোর্ড", nav_help: "হেল্প পোর্টাল",
                 hero_title: "সহযাত্রী",
                 slogan_bn: '"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"',
                 sec_notice: "সর্বশেষ <span>বিজ্ঞপ্তি</span>",
@@ -295,15 +380,22 @@
                 sec_network: "আমাদের <span>নেটওয়ার্ক</span>",
                 sec_location: "আমাদের <span>লোকেশন</span>",
                 location_sub: "আমরা যেখানে আমাদের কার্যক্রম পরিচালনা করছি",
+                sec_leaderboard: "মাসের সেরা <span>স্বেচ্ছাসেবক</span>",
+                leaderboard_sub: "যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম",
+                leader_work1: "সর্বাধিক প্রজেক্ট সম্পন্ন করেছেন", leader_work2: "সেরা ফান্ড রেইজার", leader_work3: "সেরা ক্যাম্পেইন অর্গানাইজার",
+                sec_help: "সাহায্যের <span>আবেদন</span>",
+                help_sub: "আপনার আশেপাশে কোনো শিশুর সাহায্য প্রয়োজন হলে আমাদের জানান",
+                form_name: "আপনার নাম (ঐচ্ছিক)", form_area: "এলাকা / লোকেশন *", form_details: "সমস্যার বিবরণ *", btn_submit: "আবেদন জমা দিন",
+                map_interactive_title: "লাইভ ইমপ্যাক্ট ম্যাপ", map_office_title: "আমাদের অফিস লোকেশন",
                 footer_text: "শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।",
-                footer_copy: "&copy; ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।"
+                footer_copy: "© ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।"
             },
             en: {
                 page_title: "Shohojatri | With You on the Future Path",
                 logo: "Shohojatri",
                 nav_home: "Home", nav_notice: "Notice", nav_vision: "Vision", 
                 nav_plan: "Plan", nav_contrib: "Contribution", nav_team: "Team", nav_network: "Network",
-                nav_location: "Location",
+                nav_location: "Location", nav_leaderboard: "Leaderboard", nav_help: "Help Portal",
                 hero_title: "Shohojatri",
                 slogan_bn: '"A beautiful childhood will change the world of tomorrow"',
                 sec_notice: "Latest <span>Notices</span>",
@@ -315,8 +407,15 @@
                 sec_network: "Our <span>Network</span>",
                 sec_location: "Our <span>Location</span>",
                 location_sub: "Where we are operating our activities",
+                sec_leaderboard: "Volunteer <span>of the Month</span>",
+                leaderboard_sub: "Those whose relentless hard work is driving our activities forward",
+                leader_work1: "Completed Most Projects", leader_work2: "Best Fundraiser", leader_work3: "Best Campaign Organizer",
+                sec_help: "Request <span>Help</span>",
+                help_sub: "Let us know if any child around you needs help",
+                form_name: "Your Name (Optional)", form_area: "Area / Location *", form_details: "Problem Details *", btn_submit: "Submit Request",
+                map_interactive_title: "Live Impact Map", map_office_title: "Our Office Location",
                 footer_text: "We are working across Satkhira district with the determination to develop children and build a beautiful future.",
-                footer_copy: "&copy; 2026 Shohojatri - Satkhira. With you on the path to the future."
+                footer_copy: "© 2026 Shohojatri - Satkhira. With you on the path to the future."
             }
         };
 
@@ -329,7 +428,9 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[currentLang][key]) {
-                    el.innerHTML = translations[currentLang][key];
+                    if (el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA') {
+                        el.innerHTML = translations[currentLang][key];
+                    }
                 }
             });
         }
