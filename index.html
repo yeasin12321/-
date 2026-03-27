@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সহযাত্রী | আগামীর পথে আপনার সাথে</title>
+    <title data-i18n="page_title">সহযাত্রী | আগামীর পথে আপনার সাথে</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,8 +21,26 @@
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
+        /* Dark Mode Colors */
+        body.dark-theme {
+            --light: #0f172a;
+            --dark: #f1f5f9;
+            --glass: rgba(15, 23, 42, 0.95);
+            --shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        body.dark-theme .bg-white { background: #1e293b; }
+        body.dark-theme .card { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+        body.dark-theme .card h3 { color: #fff; }
+        body.dark-theme .modal-content { background: #1e293b; color: #fff; }
+        body.dark-theme .modal-bio { background: #334155; color: #cbd5e1; }
+        body.dark-theme .map-container { border-color: #1e293b; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind Siliguri', sans-serif; }
-        body { background: var(--light); color: var(--dark); line-height: 1.8; overflow-x: hidden; scroll-behavior: smooth; }
+        body { background: var(--light); color: var(--dark); line-height: 1.8; overflow-x: hidden; scroll-behavior: smooth; transition: background 0.3s ease; }
+
+        /* Progress Bar */
+        .progress-container { position: fixed; top: 0; z-index: 2000; width: 100%; height: 4px; background: transparent; }
+        .progress-bar { height: 4px; background: var(--primary); width: 0%; border-radius: 0 2px 2px 0; }
 
         /* Modern Navigation */
         nav { 
@@ -33,12 +51,23 @@
         }
         .logo { font-size: 26px; font-weight: 700; color: var(--primary); }
         
+        .nav-right { display: flex; align-items: center; gap: 20px; }
         .nav-links { display: flex; list-style: none; }
         .nav-links li a { 
-            text-decoration: none; color: var(--dark); margin-left: 20px; 
+            text-decoration: none; color: var(--dark); margin-left: 15px; 
             font-weight: 600; transition: var(--transition); font-size: 0.95rem;
         }
         .nav-links li a:hover { color: var(--secondary); }
+
+        /* Dark Mode Toggle & Lang Switcher */
+        #theme-toggle { cursor: pointer; font-size: 1.2rem; color: var(--primary); transition: 0.3s; }
+        
+        #lang-toggle {
+            cursor: pointer; font-weight: 700; color: var(--primary);
+            padding: 4px 8px; border: 2px solid var(--primary);
+            border-radius: 5px; font-size: 0.8rem; transition: 0.3s;
+        }
+        #lang-toggle:hover { background: var(--primary); color: #fff; }
 
         .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--primary); }
 
@@ -72,7 +101,6 @@
         .card i { font-size: 48px; color: var(--secondary); margin-bottom: 25px; display: block; }
         .card h3 { margin-bottom: 15px; font-size: 1.4rem; color: var(--dark); }
 
-        /* Notice Specific (Red Accent restored) */
         #notice .card { border-left: 6px solid var(--notice-accent); text-align: left; }
         #notice .card i { color: var(--notice-accent); }
 
@@ -81,6 +109,18 @@
         .team-card img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--light); transition: var(--transition); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .team-card:hover img { border-color: var(--secondary); transform: scale(1.05); }
         .role { color: var(--secondary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+
+        /* Map Container */
+        .map-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 5px solid #fff;
+            transition: var(--transition);
+        }
 
         /* Premium Modal */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(29, 53, 87, 0.95); backdrop-filter: blur(10px); overflow-y: auto; }
@@ -93,6 +133,25 @@
         .contact-links a { font-size: 32px; transition: var(--transition); }
         .contact-links a:hover { transform: translateY(-5px); }
 
+        /* Floating Buttons (Back to Top & WhatsApp) */
+        .floating-btn-container {
+            position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 1000;
+        }
+        
+        #backToTop { 
+            width: 50px; height: 50px; background: var(--primary); color: #fff; border-radius: 50%; 
+            display: none; justify-content: center; align-items: center; cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; font-size: 20px;
+        }
+        #backToTop:hover { transform: scale(1.1); background: var(--secondary); }
+
+        .floating-whatsapp {
+            width: 55px; height: 55px; background: #25D366; color: white; border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; font-size: 32px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; text-decoration: none;
+        }
+        .floating-whatsapp:hover { transform: scale(1.1); color: white; }
+
         footer { background: #111; color: #fff; padding: 70px 8% 30px; text-align: center; }
         .footer-logo { font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
 
@@ -104,63 +163,80 @@
             .section { padding: 80px 5%; }
             .nav-links.active { 
                 display: flex; position: fixed; top: 80px; left: 0; width: 100%; 
-                background: #fff; flex-direction: column; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+                background: var(--glass); flex-direction: column; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
             }
             .nav-links.active li { margin: 15px 0; }
         }
     </style>
 </head>
-<body>
+<body id="body">
+
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
 
     <nav>
-        <div class="logo">সহযাত্রী</div>
-        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#home">হোম</a></li>
-            <li><a href="#notice">বিজ্ঞপ্তি</a></li>
-            <li><a href="#vision">লক্ষ্য</a></li>
-            <li><a href="#plan">পরিকল্পনা</a></li>
-            <li><a href="#contribution">অবদান</a></li>
-            <li><a href="#about">টিম</a></li>
-            <li><a href="#social">নেটওয়ার্ক</a></li>
-        </ul>
+        <div class="logo" data-i18n="logo">সহযাত্রী</div>
+        <div class="nav-right">
+            <span id="lang-toggle" onclick="toggleLanguage()">EN</span>
+            <i class="fas fa-moon" id="theme-toggle" onclick="toggleTheme()"></i>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" data-i18n="nav_home">হোম</a></li>
+                <li><a href="#notice" data-i18n="nav_notice">বিজ্ঞপ্তি</a></li>
+                <li><a href="#vision" data-i18n="nav_vision">লক্ষ্য</a></li>
+                <li><a href="#plan" data-i18n="nav_plan">পরিকল্পনা</a></li>
+                <li><a href="#contribution" data-i18n="nav_contrib">অবদান</a></li>
+                <li><a href="#about" data-i18n="nav_team">টিম</a></li>
+                <li><a href="#social" data-i18n="nav_network">নেটওয়ার্ক</a></li>
+                <li><a href="#location" data-i18n="nav_location">লোকেশন</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        </div>
     </nav>
 
     <section id="home" class="hero">
-        <h1 data-aos="zoom-out">সহযাত্রী</h1>
-        <p class="slogan-bn" data-aos="fade-up" data-aos-delay="200">"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"</p>
+        <h1 data-aos="zoom-out" data-i18n="hero_title">সহযাত্রী</h1>
+        <p class="slogan-bn" data-aos="fade-up" data-aos-delay="200" data-i18n="slogan_bn">"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"</p>
         <p class="slogan-en" data-aos="fade-up" data-aos-delay="400">A beautiful childhood will change the world of tomorrow.</p>
     </section>
 
     <section id="notice" class="section">
-        <h2 class="section-title" data-aos="fade-up">সর্বশেষ <span>বিজ্ঞপ্তি</span></h2>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_notice">সর্বশেষ <span>বিজ্ঞপ্তি</span></h2>
         <div id="notice-data" class="grid-container" data-aos="fade-up"></div>
     </section>
 
     <section id="vision" class="section bg-white">
-        <h2 class="section-title" data-aos="fade-up">আমাদের <span>লক্ষ্য</span></h2>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_vision">আমাদের <span>লক্ষ্য</span></h2>
         <div id="vision-data" class="grid-container" data-aos="fade-up"></div>
     </section>
 
     <section id="plan" class="section">
-        <h2 class="section-title" data-aos="fade-up">আমাদের <span>পরিকল্পনা</span></h2>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_plan">আমাদের <span>পরিকল্পনা</span></h2>
         <div id="plan-data" class="grid-container" data-aos="fade-up"></div>
     </section>
 
     <section id="contribution" class="section bg-white">
-        <h2 class="section-title" data-aos="fade-up">আমাদের <span>অবদান</span></h2>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_contrib">আমাদের <span>অবদান</span></h2>
         <div id="contribution-data" class="grid-container" data-aos="fade-up"></div>
     </section>
 
     <section id="about" class="section">
-        <h2 class="section-title" data-aos="fade-up">আমাদের <span>টিম</span></h2>
-        <p style="margin-bottom: 40px; opacity: 0.7;">বিস্তারিত জানতে সদস্যের প্রোফাইলে ক্লিক করুন</p>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_team">আমাদের <span>টিম</span></h2>
+        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="team_sub">বিস্তারিত জানতে সদস্যের প্রোফাইলে ক্লিক করুন</p>
         <div id="team-data" class="grid-container" data-aos="fade-up"></div>
     </section>
 
     <section id="social" class="section bg-white">
-        <h2 class="section-title" data-aos="fade-up">আমাদের <span>নেটওয়ার্ক</span></h2>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_network">আমাদের <span>নেটওয়ার্ক</span></h2>
         <div id="social-data" class="grid-container" data-aos="fade-up"></div>
+    </section>
+
+    <section id="location" class="section">
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_location">আমাদের <span>লোকেশন</span></h2>
+        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="location_sub">আমরা যেখানে আমাদের কার্যক্রম পরিচালনা করছি</p>
+        <div class="map-container" data-aos="zoom-in">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117621.57917719602!2d88.98801265!3d22.721471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff5c0c9d7c30ab%3A0xc00e12d1b822d56c!2sSatkhira!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
     </section>
 
     <div id="profileModal" class="modal">
@@ -178,10 +254,17 @@
         </div>
     </div>
 
+    <div class="floating-btn-container">
+        <a href="https://wa.me/8801XXXXXXXXX" class="floating-whatsapp" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <div id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></div>
+    </div>
+
     <footer>
-        <div class="footer-logo">সহযাত্রী</div>
-        <p style="max-width: 600px; margin: 0 auto 30px; opacity: 0.8;">শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।</p>
-        <div style="border-top: 1px solid #333; padding-top: 30px; font-size: 0.9rem; opacity: 0.6;">
+        <div class="footer-logo" data-i18n="logo">সহযাত্রী</div>
+        <p style="max-width: 600px; margin: 0 auto 30px; opacity: 0.8;" data-i18n="footer_text">শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।</p>
+        <div style="border-top: 1px solid #333; padding-top: 30px; font-size: 0.9rem; opacity: 0.6;" data-i18n="footer_copy">
             &copy; ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।
         </div>
     </footer>
@@ -193,10 +276,96 @@
         const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
         let fullTeamData = [];
 
+        // Translation Dictionary Updated with Location
+        const translations = {
+            bn: {
+                page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে",
+                logo: "সহযাত্রী",
+                nav_home: "হোম", nav_notice: "বিজ্ঞপ্তি", nav_vision: "লক্ষ্য", 
+                nav_plan: "পরিকল্পনা", nav_contrib: "অবদান", nav_team: "টিম", nav_network: "নেটওয়ার্ক",
+                nav_location: "লোকেশন",
+                hero_title: "সহযাত্রী",
+                slogan_bn: '"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"',
+                sec_notice: "সর্বশেষ <span>বিজ্ঞপ্তি</span>",
+                sec_vision: "আমাদের <span>লক্ষ্য</span>",
+                sec_plan: "আমাদের <span>পরিকল্পনা</span>",
+                sec_contrib: "আমাদের <span>অবদান</span>",
+                sec_team: "আমাদের <span>টিম</span>",
+                team_sub: "বিস্তারিত জানতে সদস্যের প্রোফাইলে ক্লিক করুন",
+                sec_network: "আমাদের <span>নেটওয়ার্ক</span>",
+                sec_location: "আমাদের <span>লোকেশন</span>",
+                location_sub: "আমরা যেখানে আমাদের কার্যক্রম পরিচালনা করছি",
+                footer_text: "শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।",
+                footer_copy: "&copy; ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।"
+            },
+            en: {
+                page_title: "Shohojatri | With You on the Future Path",
+                logo: "Shohojatri",
+                nav_home: "Home", nav_notice: "Notice", nav_vision: "Vision", 
+                nav_plan: "Plan", nav_contrib: "Contribution", nav_team: "Team", nav_network: "Network",
+                nav_location: "Location",
+                hero_title: "Shohojatri",
+                slogan_bn: '"A beautiful childhood will change the world of tomorrow"',
+                sec_notice: "Latest <span>Notices</span>",
+                sec_vision: "Our <span>Vision</span>",
+                sec_plan: "Our <span>Plan</span>",
+                sec_contrib: "Our <span>Contribution</span>",
+                sec_team: "Our <span>Team</span>",
+                team_sub: "Click on a member's profile for details",
+                sec_network: "Our <span>Network</span>",
+                sec_location: "Our <span>Location</span>",
+                location_sub: "Where we are operating our activities",
+                footer_text: "We are working across Satkhira district with the determination to develop children and build a beautiful future.",
+                footer_copy: "&copy; 2026 Shohojatri - Satkhira. With you on the path to the future."
+            }
+        };
+
+        let currentLang = 'bn';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'bn' ? 'en' : 'bn';
+            document.getElementById('lang-toggle').innerText = currentLang === 'bn' ? 'EN' : 'BN';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+        }
+
+        // Scroll Logic for Progress Bar and Back to Top
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+
+            const btn = document.getElementById("backToTop");
+            if (winScroll > 300) { btn.style.display = "flex"; } else { btn.style.display = "none"; }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Dark Mode Logic
+        function toggleTheme() {
+            const body = document.getElementById('body');
+            const icon = document.getElementById('theme-toggle');
+            body.classList.toggle('dark-theme');
+            if(body.classList.contains('dark-theme')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
 
+        // Data Fetching
         async function loadSheetData() {
             try {
                 const response = await fetch(API_URL);
@@ -258,9 +427,8 @@
             document.getElementById('modalImg').src = member.Image || 'https://via.placeholder.com/150';
             document.getElementById('modalName').innerText = member.Name;
             document.getElementById('modalRole').innerText = member.Role;
-            document.getElementById('modalBio').innerText = member.Details || member.Work || "বিস্তারিত তথ্য শীঘ্রই যুক্ত করা হবে।";
+            document.getElementById('modalBio').innerText = member.Details || member.Work || (currentLang === 'bn' ? "বিস্তারিত তথ্য শীঘ্রই যুক্ত করা হবে।" : "Detailed info will be added soon.");
             
-            // Socials
             document.getElementById('modalFB').href = member.FB || "#";
             document.getElementById('modalFB').style.display = member.FB ? "inline-block" : "none";
             
