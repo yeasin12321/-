@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।">
+    <meta property="og:title" content="সহযাত্রী | আগামীর পথে আপনার সাথে">
+    <meta property="og:description" content="সাতক্ষীরা জেলায় শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমাদের কার্যক্রম।">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1470&q=80">
+    <meta property="og:url" content="https://your-website-link.com">
+    <meta property="og:type" content="website">
+
     <title data-i18n="page_title">সহযাত্রী | আগামীর পথে আপনার সাথে</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
     <style>
         :root {
@@ -120,37 +130,20 @@
         .btn-submit { width: 100%; padding: 15px; background: var(--secondary); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
         .btn-submit:hover { background: var(--primary); box-shadow: 0 5px 15px rgba(0,119,182,0.3); }
 
-        /* Interactive Map Styles */
-        .interactive-map-wrapper { 
-            position: relative; width: 100%; max-width: 1000px; height: 450px; margin: 0 auto 50px; 
-            background: rgba(0, 119, 182, 0.03); border-radius: 20px; border: 2px dashed var(--primary); 
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        /* Leaflet Map Style */
+        #impactMap {
+            width: 100%;
+            max-width: 1000px;
+            height: 450px;
+            margin: 0 auto 50px;
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow);
+            z-index: 1; /* Ensures it stays behind the nav menu */
         }
-        .map-bg-img { position: absolute; width: 100%; height: 100%; object-fit: contain; opacity: 0.15; z-index: 1; }
-        .map-pin { 
-            position: absolute; width: 24px; height: 24px; background: var(--notice-accent); 
-            border-radius: 50%; cursor: pointer; z-index: 2; animation: pulse 2s infinite; 
-            display: flex; justify-content: center; align-items: center; color: white; font-size: 10px;
-        }
-        .map-pin::after { 
-            content: attr(data-info); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); 
-            background: var(--dark); color: white; padding: 8px 15px; border-radius: 8px; font-size: 0.9rem; 
-            white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s; font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        .map-pin::before {
-            content: ''; position: absolute; bottom: 80%; left: 50%; transform: translateX(-50%);
-            border-width: 6px; border-style: solid; border-color: var(--dark) transparent transparent transparent;
-            opacity: 0; transition: 0.3s;
-        }
-        .map-pin:hover::after, .map-pin:hover::before { opacity: 1; bottom: 150%; }
-        .map-pin:hover::before { bottom: 100%; }
         
-        @keyframes pulse { 
-            0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.6); } 
-            70% { box-shadow: 0 0 0 15px rgba(230, 57, 70, 0); } 
-            100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); } 
-        }
+        /* Popup text styling */
+        .leaflet-popup-content b { color: var(--primary); font-family: 'Hind Siliguri', sans-serif; font-size: 1.1rem; }
 
         /* Team & Members */
         .team-card { cursor: pointer; }
@@ -310,13 +303,8 @@
         <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="location_sub">আমরা যেখানে আমাদের কার্যক্রম পরিচালনা করছি</p>
         
         <h3 style="margin-bottom: 20px; font-weight: 600; color: var(--primary);" data-i18n="map_interactive_title">লাইভ ইমপ্যাক্ট ম্যাপ</h3>
-        <div class="interactive-map-wrapper" data-aos="fade-up">
-            <h2 style="position:absolute; z-index:0; opacity:0.1; font-size:4rem; text-transform:uppercase; font-weight:700;">Satkhira</h2>
-            <div class="map-pin" data-info="শ্যামনগর: শিক্ষা সামগ্রী বিতরণ" style="top: 30%; left: 40%;"><i class="fas fa-star"></i></div>
-            <div class="map-pin" data-info="কালিগঞ্জ: সাইবার সেফটি ওয়ার্কশপ" style="top: 60%; left: 70%;"><i class="fas fa-shield-alt"></i></div>
-            <div class="map-pin" data-info="আশাশুনি: মানসিক স্বাস্থ্য ক্যাম্প" style="top: 50%; left: 25%;"><i class="fas fa-heart"></i></div>
-            <div class="map-pin" data-info="সাতক্ষীরা সদর: পথশিশু খাদ্য বিতরণ" style="top: 45%; left: 55%;"><i class="fas fa-utensils"></i></div>
-        </div>
+        
+        <div id="impactMap" data-aos="fade-up"></div>
 
         <h3 style="margin: 40px 0 20px; font-weight: 600; color: var(--primary);" data-i18n="map_office_title">আমাদের অফিস লোকেশন</h3>
         <div class="map-container" data-aos="zoom-in">
@@ -355,13 +343,15 @@
     </footer>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
     <script>
         AOS.init({ duration: 1000, once: true, offset: 100 });
 
         const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
         let fullTeamData = [];
 
-        // Updated Translations 
+        // Translations 
         const translations = {
             bn: {
                 page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে",
@@ -466,6 +456,27 @@
             document.getElementById('navLinks').classList.toggle('active');
         }
 
+        // --- Leaflet Map Initialization ---
+        const map = L.map('impactMap').setView([22.7185, 89.0705], 10); // Satkhira Center Coordinates
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Location Data for Satkhira Districts
+        const impactLocations = [
+            { lat: 22.3304, lng: 89.1028, title: "শ্যামনগর", details: "শিক্ষা সামগ্রী বিতরণ" },
+            { lat: 22.4500, lng: 89.0333, title: "কালিগঞ্জ", details: "সাইবার সেফটি ওয়ার্কশপ" },
+            { lat: 22.5500, lng: 89.1500, title: "আশাশুনি", details: "মানসিক স্বাস্থ্য ক্যাম্প" },
+            { lat: 22.7185, lng: 89.0705, title: "সাতক্ষীরা সদর", details: "পথশিশু খাদ্য বিতরণ" }
+        ];
+
+        // Adding Markers
+        impactLocations.forEach(loc => {
+            L.marker([loc.lat, loc.lng]).addTo(map)
+                .bindPopup(`<b>${loc.title}</b><br>${loc.details}`);
+        });
+
         // Data Fetching
         async function loadSheetData() {
             try {
@@ -502,7 +513,7 @@
             const container = document.getElementById('team-data');
             container.innerHTML = team.map((member, index) => `
                 <div class="card team-card" onclick="openProfile(${index})">
-                    <img src="${member.Image || 'https://via.placeholder.com/150'}" alt="${member.Name}">
+                    <img src="${member.Image || 'https://via.placeholder.com/150'}" alt="${member.Name} এর ছবি">
                     <h3>${member.Name}</h3>
                     <span class="role">${member.Role}</span>
                     <p style="font-size:0.9rem; opacity:0.8;">${member.Work}</p>
