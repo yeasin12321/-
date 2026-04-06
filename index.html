@@ -1,508 +1,420 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="description" content="শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।">
-    <meta property="og:title" content="সহযাত্রী | আগামীর পথে আপনার সাথে">
-    <meta property="og:description" content="সাতক্ষীরা জেলায় শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমাদের কার্যক্রম।">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1470&q=80">
-    <meta property="og:url" content="https://your-website-link.com">
-    <meta property="og:type" content="website">
-
+    <meta name="description" content="সহযাত্রী (Shohojatri) - শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি।">
     <title data-i18n="page_title">সহযাত্রী | আগামীর পথে আপনার সাথে</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 
     <style>
         :root {
-            --primary: #0077b6;
-            --secondary: #2a9134;
-            --notice-accent: #e63946;
-            --dark: #1d3557;
-            --light: #f8f9fa;
-            --glass: rgba(255, 255, 255, 0.95);
-            --shadow: 0 10px 40px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --primary: #115E59;      
+            --primary-light: #14B8A6; 
+            --secondary: #F59E0B;    
+            --accent: #F43F5E;       
+            --bg-light: #FAFAF9;     
+            --card-bg: #FFFFFF;
+            --text-dark: #1C1917;
+            --text-muted: #78716C;
+            --shadow-dream: 0 20px 40px rgba(0,0,0,0.06);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Dark Mode Colors */
-        body.dark-theme {
-            --light: #0f172a;
-            --dark: #f1f5f9;
-            --glass: rgba(15, 23, 42, 0.95);
-            --shadow: 0 10px 40px rgba(0,0,0,0.3);
+        /* Custom Cursor */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        
+        .magic-cursor {
+            position: fixed; width: 30px; height: 30px; border: 2px solid var(--secondary);
+            border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%);
+            z-index: 999999; transition: width 0.3s, height 0.3s, background 0.3s;
+            mix-blend-mode: difference;
         }
-        body.dark-theme .bg-white { background: #1e293b; }
-        body.dark-theme .card { background: #1e293b; border-color: #334155; color: #f1f5f9; }
-        body.dark-theme .card h3 { color: #fff; }
-        body.dark-theme .modal-content { background: #1e293b; color: #fff; }
-        body.dark-theme .modal-bio { background: #334155; color: #cbd5e1; }
-        body.dark-theme .map-container { border-color: #1e293b; }
-        body.dark-theme .form-control { background: #334155; color: #fff; border-color: #475569; }
+        .magic-cursor-dot {
+            position: fixed; width: 8px; height: 8px; background: var(--secondary);
+            border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%);
+            z-index: 1000000;
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind Siliguri', sans-serif; }
-        body { background: var(--light); color: var(--dark); line-height: 1.8; overflow-x: hidden; scroll-behavior: smooth; transition: background 0.3s ease; }
+        body { 
+            font-family: 'Hind Siliguri', 'Outfit', sans-serif; 
+            background-color: var(--bg-light); color: var(--text-dark); 
+            line-height: 1.8; overflow-x: hidden;
+        }
 
-        /* Progress Bar */
-        .progress-container { position: fixed; top: 0; z-index: 2000; width: 100%; height: 4px; background: transparent; }
-        .progress-bar { height: 4px; background: var(--primary); width: 0%; border-radius: 0 2px 2px 0; }
+        /* Custom Logo Sizing */
+        .logo img, .preloader-logo img, footer h2 img {
+            height: 40px; 
+            width: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
 
-        /* Modern Navigation */
+        /* Cinematic Preloader */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #115E59; z-index: 9999999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .preloader-logo { font-size: 3rem; color: #fff; font-weight: 800; display: flex; align-items: center; gap: 15px; animation: pulseGlow 2s infinite alternate; }
+        .preloader-text { color: var(--secondary); font-size: 1.2rem; margin-top: 15px; font-weight: 300; letter-spacing: 2px; }
+        @keyframes pulseGlow { 0% { text-shadow: 0 0 10px rgba(245,158,11,0.2); transform: scale(1); } 100% { text-shadow: 0 0 30px rgba(245,158,11,0.8); transform: scale(1.05); } }
+
+        /* Floating Nav */
         nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 8%; height: 80px; background: var(--glass); 
-            backdrop-filter: blur(15px); position: fixed; width: 100%; top: 0; 
-            z-index: 1000; box-shadow: 0 2px 25px rgba(0,0,0,0.05);
+            position: fixed; top: 0; left: 0; width: 100%; padding: 25px 8%;
+            background: transparent; display: flex; justify-content: space-between; align-items: center; 
+            z-index: 10000; transition: var(--transition);
         }
-        .logo { font-size: 26px; font-weight: 700; color: var(--primary); }
+        nav.scrolled { padding: 15px 8%; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-        .nav-links { display: flex; list-style: none; flex-wrap: wrap; justify-content: flex-end;}
-        .nav-links li a { 
-            text-decoration: none; color: var(--dark); margin-left: 15px; 
-            font-weight: 600; transition: var(--transition); font-size: 0.95rem;
-        }
-        .nav-links li a:hover { color: var(--secondary); }
-
-        /* Dark Mode Toggle & Lang Switcher */
-        #theme-toggle { cursor: pointer; font-size: 1.2rem; color: var(--primary); transition: 0.3s; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        nav.scrolled .logo { color: var(--primary); }
         
-        #lang-toggle {
-            cursor: pointer; font-weight: 700; color: var(--primary);
-            padding: 4px 8px; border: 2px solid var(--primary);
-            border-radius: 5px; font-size: 0.8rem; transition: 0.3s;
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links li a { text-decoration: none; color: #fff; font-weight: 600; transition: 0.3s; position: relative; }
+        nav.scrolled .nav-links li a { color: var(--text-dark); }
+        .nav-links li a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--secondary); transition: 0.3s; }
+        .nav-links li a:hover::after { width: 100%; }
+
+        #lang-toggle { 
+            background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 30px; padding: 6px 18px; cursor: none; transition: 0.3s; backdrop-filter: blur(5px);
         }
-        #lang-toggle:hover { background: var(--primary); color: #fff; }
+        nav.scrolled #lang-toggle { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-        .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--primary); }
-
-        /* Premium Hero Section */
+        /* Hero Section */
         .hero { 
-            height: 100vh; background: linear-gradient(rgba(29, 53, 87, 0.65), rgba(29, 53, 87, 0.65)), 
-            url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1470&q=80'); 
-            background-size: cover; background-attachment: fixed; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; color: #fff; padding: 0 20px;
+            height: 100vh; position: relative; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; padding: 0 20px;
+            background: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+            overflow: hidden;
         }
-        .hero h1 { font-size: 4.5rem; font-weight: 700; margin-bottom: 10px; }
-        .hero .slogan-bn { font-size: 1.6rem; font-weight: 400; font-style: italic; margin-bottom: 5px; }
-        .hero .slogan-en { font-size: 1.1rem; opacity: 0.9; font-weight: 300; letter-spacing: 1px; }
-
-        /* Section Global Styles */
-        .section { padding: 100px 8%; text-align: center; }
-        .bg-white { background: #fff; }
-        .section-title { font-size: 2.4rem; margin-bottom: 50px; position: relative; font-weight: 700; }
-        .section-title span { color: var(--secondary); }
-        .section-title::after { content: ''; position: absolute; width: 70px; height: 4px; background: var(--secondary); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
-
-        /* Enhanced Card Design */
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
-        .card { 
-            background: #fff; padding: 45px 35px; border-radius: 24px; 
-            box-shadow: var(--shadow); transition: var(--transition); 
-            border: 1px solid rgba(0,0,0,0.02); text-align: center;
-        }
-        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); border-bottom: 5px solid var(--primary); }
-        .card i { font-size: 48px; color: var(--secondary); margin-bottom: 25px; display: block; }
-        .card h3 { margin-bottom: 15px; font-size: 1.4rem; color: var(--dark); }
-
-        #notice .card { border-left: 6px solid var(--notice-accent); text-align: left; }
-        #notice .card i { color: var(--notice-accent); }
-
-        /* Leaderboard Styles */
-        .rank-badge { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; margin: 0 auto 15px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .gold { background: linear-gradient(135deg, #FFD700, #FDB931); }
-        .silver { background: linear-gradient(135deg, #E0E0E0, #9E9E9E); }
-        .bronze { background: linear-gradient(135deg, #CD7F32, #A0522D); }
-
-        /* Help Portal Styles */
-        .help-form { text-align: left; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
-        .form-control { width: 100%; padding: 12px 15px; border: 2px solid rgba(0,0,0,0.1); border-radius: 10px; font-size: 1rem; font-family: inherit; transition: 0.3s; background: #fafafa; }
-        .form-control:focus { outline: none; border-color: var(--primary); background: transparent; }
-        .btn-submit { width: 100%; padding: 15px; background: var(--secondary); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-submit:hover { background: var(--primary); box-shadow: 0 5px 15px rgba(0,119,182,0.3); }
-
-        /* Leaflet Map Style */
-        #impactMap {
-            width: 100%;
-            max-width: 1000px;
-            height: 450px;
-            margin: 0 auto 50px;
-            border-radius: 20px;
-            border: 2px solid var(--primary);
-            box-shadow: var(--shadow);
-            z-index: 1; /* Ensures it stays behind the nav menu */
-        }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(17, 94, 89, 0.7), rgba(0,0,0,0.5)); z-index: 1; }
         
-        /* Popup text styling */
-        .leaflet-popup-content b { color: var(--primary); font-family: 'Hind Siliguri', sans-serif; font-size: 1.1rem; }
+        .firefly { position: absolute; width: 4px; height: 4px; background: var(--secondary); border-radius: 50%; box-shadow: 0 0 10px 2px var(--secondary); z-index: 2; animation: fly random(10s) infinite alternate; opacity: 0.6; }
+        .firefly:nth-child(1) { top: 20%; left: 10%; animation: fly 8s ease-in-out infinite alternate; }
+        .firefly:nth-child(2) { top: 60%; left: 80%; animation: fly 12s ease-in-out infinite alternate-reverse; }
+        .firefly:nth-child(3) { top: 80%; left: 30%; animation: fly 9s ease-in-out infinite alternate; }
+        .firefly:nth-child(4) { top: 30%; left: 60%; animation: fly 15s ease-in-out infinite alternate-reverse; }
+        .firefly:nth-child(5) { top: 50%; left: 50%; animation: fly 10s ease-in-out infinite alternate; }
+        @keyframes fly { 0% { transform: translate(0, 0) scale(1); opacity: 0.3; } 50% { opacity: 1; } 100% { transform: translate(100px, -100px) scale(1.5); opacity: 0.3; } }
 
-        /* Team & Members */
-        .team-card { cursor: pointer; }
-        .team-card img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--light); transition: var(--transition); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .team-card:hover img { border-color: var(--secondary); transform: scale(1.05); }
-        .role { color: var(--secondary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+        .hero-content { position: relative; z-index: 3; }
+        .hero h1 { font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.1; text-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .hero .slogan-bn { font-size: clamp(1.2rem, 3vw, 2.2rem); font-weight: 400; color: var(--secondary); font-style: italic; margin-bottom: 20px; }
+        
+        .wave-bottom { position: absolute; bottom: -1px; left: 0; width: 100%; z-index: 5; line-height: 0; }
+        .wave-bottom svg { display: block; width: calc(100% + 1.3px); height: 120px; }
+        .wave-bottom .shape-fill { fill: var(--bg-light); }
 
-        /* Map Container (Old Iframe) */
-        .map-container { width: 100%; max-width: 1000px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); border: 5px solid #fff; transition: var(--transition); }
+        /* Sections */
+        .section { padding: 120px 5%; max-width: 1350px; margin: 0 auto; position: relative; }
+        .section-title { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; color: var(--primary); margin-bottom: 15px; text-align: center; }
+        .section-sub { text-align: center; color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 60px; }
 
-        /* Premium Modal */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(29, 53, 87, 0.95); backdrop-filter: blur(10px); overflow-y: auto; }
-        .modal-content { background: #fff; margin: 50px auto; padding: 50px 40px; width: 90%; max-width: 500px; border-radius: 30px; text-align: center; position: relative; animation: slideUp 0.5s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        .close { position: absolute; right: 25px; top: 20px; font-size: 35px; cursor: pointer; color: #999; }
-        .modal-img { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 5px solid var(--secondary); margin-bottom: 25px; }
-        .modal-bio { text-align: left; background: #f8fafd; padding: 25px; border-radius: 20px; margin-top: 20px; font-size: 1rem; border-left: 4px solid var(--primary); }
-        .contact-links { margin-top: 30px; display: flex; justify-content: center; gap: 25px; }
-        .contact-links a { font-size: 32px; transition: var(--transition); }
-        .contact-links a:hover { transform: translateY(-5px); }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        
+        .creative-card {
+            background: var(--card-bg); border-radius: 30px; padding: 50px 40px;
+            box-shadow: var(--shadow-dream); border: 1px solid rgba(0,0,0,0.02);
+            transition: var(--transition); position: relative; overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        .creative-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(20, 184, 166, 0.05) 0%, transparent 60%); opacity: 0; transition: var(--transition); pointer-events: none; }
+        .creative-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(17, 94, 89, 0.1); }
+        .creative-card:hover::after { opacity: 1; transform: scale(1.2); }
 
-        /* Floating Buttons */
-        .floating-btn-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
-        #backToTop { width: 50px; height: 50px; background: var(--primary); color: #fff; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; font-size: 20px; }
-        #backToTop:hover { transform: scale(1.1); background: var(--secondary); }
-        .floating-whatsapp { width: 55px; height: 55px; background: #25D366; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; text-decoration: none; }
-        .floating-whatsapp:hover { transform: scale(1.1); color: white; }
+        .card-icon { 
+            width: 80px; height: 80px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; 
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex; align-items: center; justify-content: center; font-size: 30px;
+            color: #fff; margin-bottom: 30px; transition: 0.5s;
+            animation: organicBlob 5s linear infinite alternate;
+        }
+        @keyframes organicBlob { 0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(10deg); } }
+        
+        .creative-card h3 { font-size: 1.6rem; margin-bottom: 15px; font-weight: 700; color: var(--text-dark); }
+        .creative-card p { color: var(--text-muted); font-size: 1.05rem; }
 
-        footer { background: #111; color: #fff; padding: 70px 8% 30px; text-align: center; }
-        .footer-logo { font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
+        /* Team Section */
+        .team-img-blob { 
+            width: 160px; height: 160px; margin: 0 auto 25px; object-fit: cover;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            border: 4px solid var(--secondary); padding: 4px;
+            animation: morph 8s ease-in-out infinite; transition: var(--transition);
+        }
+        @keyframes morph { 
+            0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 
+            34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; } 
+            67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; } 
+        }
+        .creative-card.team-card { text-align: center; }
+        .creative-card.team-card:hover .team-img-blob { transform: scale(1.1); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.3); border-color: var(--primary-light); }
 
-        /* Responsive */
+        /* Team Details Modal */
+        .modal { display: none; position: fixed; z-index: 300000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(17, 94, 89, 0.8); backdrop-filter: blur(10px); opacity: 0; transition: 0.4s; align-items: center; justify-content: center; }
+        .modal.active { opacity: 1; }
+        .modal-content { background: #fff; width: 90%; max-width: 480px; border-radius: 40px; padding: 50px 40px; text-align: center; position: relative; transform: scale(0.9) translateY(30px); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+        .modal.active .modal-content { transform: scale(1) translateY(0); }
+        .close { position: absolute; right: 25px; top: 25px; font-size: 24px; color: var(--text-muted); transition: 0.3s; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-light); border: 1px solid rgba(0,0,0,0.05); }
+        .close:hover { color: var(--accent); background: rgba(244, 63, 94, 0.1); transform: rotate(90deg); }
+        
+        .modal-bio { margin-top: 25px; font-size: 1.05rem; color: var(--text-dark); background: var(--bg-light); padding: 25px; border-radius: 20px; text-align: left; line-height: 1.6; border-left: 4px solid var(--primary-light); }
+        .social-btns { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+        .s-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .s-btn:hover { transform: translateY(-5px) scale(1.1); }
+
+        /* Help Portal */
+        .help-portal-wrapper {
+            background: linear-gradient(rgba(17,94,89,0.9), rgba(17,94,89,0.9)), url('https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+            padding: 100px 5%; border-radius: 40px; margin: 50px 2%; color: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+        .help-form-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); padding: 50px; border-radius: 30px; max-width: 800px; margin: 0 auto; }
+        .form-control { width: 100%; padding: 18px 25px; margin-bottom: 25px; background: rgba(255,255,255,0.9); border: none; border-radius: 15px; font-size: 1.05rem; font-family: inherit; }
+        .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: #fff; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: 700; transition: var(--transition); }
+        .btn-submit:hover { background: #fff; color: var(--secondary); transform: scale(1.02); }
+
+        /* Actions */
+        .floating-actions { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 10000; }
+        .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: white; transition: 0.3s; text-decoration: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .fab-wa { background: #25D366; }
+        .fab:hover { transform: scale(1.1) rotate(10deg); }
+
+        footer { text-align: center; padding: 80px 20px 40px; background: #0F172A; color: #fff; }
+        .map-wrapper { border-radius: 30px; overflow: hidden; border: 10px solid #fff; box-shadow: var(--shadow-dream); }
+        #impactMap { width: 100%; height: 500px; z-index: 1; }
+
         @media (max-width: 992px) {
             .nav-links { display: none; }
-            .menu-toggle { display: block; }
-            .hero h1 { font-size: 3rem; }
             .section { padding: 80px 5%; }
-            .nav-links.active { display: flex; position: fixed; top: 80px; left: 0; width: 100%; background: var(--glass); flex-direction: column; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-            .nav-links.active li { margin: 15px 0; }
+            .magic-cursor, .magic-cursor-dot { display: none; }
+            * { cursor: auto !important; }
+            .close { cursor: pointer; }
         }
     </style>
 </head>
-<body id="body">
+<body>
 
-    <div class="progress-container">
-        <div class="progress-bar" id="myBar"></div>
+    <div id="preloader">
+        <div class="preloader-logo">
+            <img src="logo.png" alt="Logo"> সহযাত্রী
+        </div>
+        <div class="preloader-text">আগামীর পথে আপনার সাথে...</div>
     </div>
 
-    <nav>
-        <div class="logo" data-i18n="logo">সহযাত্রী</div>
+    <div class="magic-cursor" id="cursor"></div>
+    <div class="magic-cursor-dot" id="cursor-dot"></div>
+
+    <nav id="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo"> <span data-i18n="logo">সহযাত্রী</span>
+        </div>
         <div class="nav-right">
-            <span id="lang-toggle" onclick="toggleLanguage()">EN</span>
-            <i class="fas fa-moon" id="theme-toggle" onclick="toggleTheme()"></i>
-            <ul class="nav-links" id="navLinks">
+            <ul class="nav-links">
                 <li><a href="#home" data-i18n="nav_home">হোম</a></li>
-                <li><a href="#notice" data-i18n="nav_notice">বিজ্ঞপ্তি</a></li>
+                <li><a href="#vision" data-i18n="nav_vision">লক্ষ্য</a></li>
                 <li><a href="#plan" data-i18n="nav_plan">পরিকল্পনা</a></li>
-                <li><a href="#leaderboard" data-i18n="nav_leaderboard">লিডারবোর্ড</a></li>
-                <li><a href="#help-portal" data-i18n="nav_help">হেল্প পোর্টাল</a></li>
                 <li><a href="#about" data-i18n="nav_team">টিম</a></li>
-                <li><a href="#location" data-i18n="nav_location">লোকেশন</a></li>
             </ul>
-            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <button id="lang-toggle" onclick="toggleLanguage()">EN</button>
         </div>
     </nav>
 
     <section id="home" class="hero">
-        <h1 data-aos="zoom-out" data-i18n="hero_title">সহযাত্রী</h1>
-        <p class="slogan-bn" data-aos="fade-up" data-aos-delay="200" data-i18n="slogan_bn">"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"</p>
-        <p class="slogan-en" data-aos="fade-up" data-aos-delay="400">A beautiful childhood will change the world of tomorrow.</p>
+        <div class="hero-overlay"></div>
+        <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+        
+        <div class="hero-content">
+            <h1 data-aos="zoom-out" data-aos-duration="2000" data-i18n="hero_title">শিশুদের সুন্দর আগামী শৈশব</h1>
+            <p class="slogan-bn" data-aos="fade-up" data-aos-delay="500" data-i18n="slogan_bn">"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"</p>
+        </div>
+
+        <div class="wave-bottom">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C-1,95.8,110.15,116.48,220.6,116.48,255.4,116.48,289.8,103.8,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
     </section>
 
     <section id="notice" class="section">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_notice">সর্বশেষ <span>বিজ্ঞপ্তি</span></h2>
-        <div id="notice-data" class="grid-container" data-aos="fade-up"></div>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_notice">সর্বশেষ বিজ্ঞপ্তি</h2>
+        <div id="notice-data" class="grid-container"></div>
     </section>
 
-    <section id="vision" class="section bg-white">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_vision">আমাদের <span>লক্ষ্য</span></h2>
-        <div id="vision-data" class="grid-container" data-aos="fade-up"></div>
+    <section id="vision" class="section" style="background: #fff; border-radius: 40px; padding-bottom: 120px;">
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_vision">আমাদের লক্ষ্য</h2>
+        <p class="section-sub">যে স্বপ্ন বুকে ধারণ করে আমরা দুর্বার গতিতে এগিয়ে চলছি</p>
+        <div id="vision-data" class="grid-container"></div>
     </section>
 
     <section id="plan" class="section">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_plan">আমাদের <span>পরিকল্পনা</span></h2>
-        <div id="plan-data" class="grid-container" data-aos="fade-up"></div>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_plan">আমাদের পরিকল্পনা</h2>
+        <div id="plan-data" class="grid-container"></div>
     </section>
 
-    <section id="leaderboard" class="section bg-white">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_leaderboard">মাসের সেরা <span>স্বেচ্ছাসেবক</span></h2>
-        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="leaderboard_sub">যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম</p>
-        <div class="grid-container" data-aos="fade-up">
-            <div class="card">
-                <div class="rank-badge gold"><i class="fas fa-trophy"></i></div>
-                <h3>তানভীরুজ্জামান নাফিস</h3>
-                <p data-i18n="leader_work1">সর্বাধিক প্রজেক্ট সম্পন্ন করেছেন</p>
-            </div>
-            <div class="card">
-                <div class="rank-badge silver"><i class="fas fa-medal"></i></div>
-                <h3>তৃণা মিত্র</h3>
-                <p data-i18n="leader_work2">সেরা ফান্ড রেইজার</p>
-            </div>
-            <div class="card">
-                <div class="rank-badge bronze"><i class="fas fa-award"></i></div>
-                <h3>Anamika Arna</h3>
-                <p data-i18n="leader_work3">সেরা ক্যাম্পেইন অর্গানাইজার</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="help-portal" class="section">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_help">সাহায্যের <span>আবেদন</span></h2>
-        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="help_sub">আপনার আশেপাশে কোনো শিশুর সাহায্য প্রয়োজন হলে আমাদের জানান</p>
-        <div class="card" style="max-width: 600px; margin: 0 auto; padding: 40px;" data-aos="zoom-in">
-            
-            <form action="https://formsubmit.co/yeasinkabir0000@gmail.com" method="POST" class="help-form">
-                
-                <input type="hidden" name="_subject" value="Shohojatri Help Portal theke Notun Abedon!">
+    <div class="help-portal-wrapper" data-aos="fade-up">
+        <h2 style="text-align:center; font-size: 3rem; margin-bottom: 10px; font-weight:800;">সাহায্যের আবেদন</h2>
+        <p style="text-align:center; margin-bottom: 50px; font-size:1.2rem; opacity:0.9;">আপনার চারপাশে কোনো শিশুর চিকিৎসা বা শিক্ষার প্রয়োজন হলে আমাদের জানান</p>
+        
+        <div class="help-form-container" data-aos="zoom-in">
+            <form action="https://formsubmit.co/yeasinkabir0000@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Shohojatri Cinematic Portal Request!">
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
-
-                <div class="form-group">
-                    <label data-i18n="form_name">আপনার নাম (ঐচ্ছিক)</label>
-                    <input type="text" name="Name" class="form-control" placeholder="নাম গোপন রাখতে চাইলে ফাঁকা রাখুন">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="form_area">এলাকা / লোকেশন *</label>
-                    <input type="text" name="Location" class="form-control" required placeholder="যেমন: কালিগঞ্জ, সাতক্ষীরা">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="form_details">সমস্যার বিবরণ *</label>
-                    <textarea name="Details" class="form-control" rows="4" required placeholder="বিস্তারিত লিখুন..."></textarea>
-                </div>
-                <button type="submit" class="btn-submit" data-i18n="btn_submit">আবেদন জমা দিন</button>
+                
+                <input type="text" name="Name" class="form-control" placeholder="আপনার নাম (ঐচ্ছিক)" data-i18n-placeholder="form_name">
+                <input type="text" name="Location" class="form-control" required placeholder="এলাকা / লোকেশন *" data-i18n-placeholder="form_area">
+                <textarea name="Details" class="form-control" rows="4" required placeholder="সমস্যার বিস্তারিত বিবরণ লিখুন *" data-i18n-placeholder="form_details"></textarea>
+                
+                <button type="submit" class="btn-submit" data-i18n="btn_submit">আবেদন জমা দিন <i class="fas fa-paper-plane" style="margin-left: 10px;"></i></button>
             </form>
-
         </div>
     </section>
 
-    <section id="contribution" class="section bg-white">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_contrib">আমাদের <span>অবদান</span></h2>
-        <div id="contribution-data" class="grid-container" data-aos="fade-up"></div>
-    </section>
-
-    <section id="about" class="section">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_team">আমাদের <span>টিম</span></h2>
-        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="team_sub">বিস্তারিত জানতে সদস্যের প্রোফাইলে ক্লিক করুন</p>
-        <div id="team-data" class="grid-container" data-aos="fade-up"></div>
-    </section>
-
-    <section id="social" class="section bg-white">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_network">আমাদের <span>নেটওয়ার্ক</span></h2>
-        <div id="social-data" class="grid-container" data-aos="fade-up"></div>
+    <section id="about" class="section" style="background: #fff; border-radius: 40px;">
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_team">আমাদের কারিগর</h2>
+        <p class="section-sub" data-i18n="team_sub">যাদের হাত ধরে এগিয়ে যাচ্ছে 'সহযাত্রী' - বিস্তারিত জানতে ছবিতে ক্লিক করুন</p>
+        <div id="team-data" class="grid-container"></div>
     </section>
 
     <section id="location" class="section">
-        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_location">আমাদের <span>লোকেশন</span></h2>
-        <p style="margin-bottom: 40px; opacity: 0.7;" data-i18n="location_sub">আমরা যেখানে আমাদের কার্যক্রম পরিচালনা করছি</p>
-        
-        <h3 style="margin-bottom: 20px; font-weight: 600; color: var(--primary);" data-i18n="map_interactive_title">লাইভ ইমপ্যাক্ট ম্যাপ</h3>
-        
-        <div id="impactMap" data-aos="fade-up"></div>
-
-        <h3 style="margin: 40px 0 20px; font-weight: 600; color: var(--primary);" data-i18n="map_office_title">আমাদের অফিস লোকেশন</h3>
-        <div class="map-container" data-aos="zoom-in">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117621.57917719602!2d88.98801265!3d22.721471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff5c0c9d7c30ab%3A0xc00e12d1b822d56c!2sSatkhira!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_location">কার্যক্রমের অবস্থান</h2>
+        <div class="map-wrapper" data-aos="fade-up">
+            <div id="impactMap"></div>
         </div>
     </section>
 
     <div id="profileModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">×</span>
-            <img id="modalImg" class="modal-img" src="">
-            <h2 id="modalName"></h2>
-            <span id="modalRole" class="role"></span>
+            <span class="close" onclick="closeModal()"><i class="fas fa-times"></i></span>
+            <img id="modalImg" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--secondary); padding: 3px; margin-bottom: 15px; object-fit: cover;" src="">
+            <h2 id="modalName" style="font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 5px;"></h2>
+            <span id="modalRole" style="color: var(--primary-light); font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;"></span>
             <div id="modalBio" class="modal-bio"></div>
-            <div class="contact-links">
-                <a id="modalFB" href="#" target="_blank" style="color: #1877F2;"><i class="fab fa-facebook"></i></a>
-                <a id="modalWA" href="#" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i></a>
-                <a id="modalMail" href="#" style="color: #EA4335;"><i class="fas fa-envelope"></i></a>
+            
+            <div class="social-btns">
+                <a id="modalFB" href="#" target="_blank" class="s-btn" style="background: #1877F2;"><i class="fab fa-facebook-f"></i></a>
+                <a id="modalWA" href="#" target="_blank" class="s-btn" style="background: #25D366;"><i class="fab fa-whatsapp"></i></a>
+                <a id="modalMail" href="#" class="s-btn" style="background: #EA4335;"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </div>
 
-    <div class="floating-btn-container">
-        <a href="https://wa.me/8801851715713" class="floating-whatsapp" target="_blank">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-        <div id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></div>
+    <div class="floating-actions">
+        <a href="https://wa.me/8801851715713" class="fab fab-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
 
     <footer>
-        <div class="footer-logo" data-i18n="logo">সহযাত্রী</div>
-        <p style="max-width: 600px; margin: 0 auto 30px; opacity: 0.8;" data-i18n="footer_text">শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।</p>
-        <div style="border-top: 1px solid #333; padding-top: 30px; font-size: 0.9rem; opacity: 0.6;" data-i18n="footer_copy">
-            © ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।
-        </div>
+        <h2 style="font-size: 2rem; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <img src="logo.png" alt="Logo"> <span data-i18n="logo">সহযাত্রী</span>
+        </h2>
+        <p style="opacity: 0.7; margin-bottom: 20px;" data-i18n="footer_text">শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি।</p>
+        <p style="font-size: 0.9rem; opacity: 0.5;" data-i18n="footer_copy">© ২০২৬ সহযাত্রী - সাতক্ষীরা।</p>
     </footer>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     
     <script>
-        AOS.init({ duration: 1000, once: true, offset: 100 });
+        // Cinematic Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => { preloader.style.display = 'none'; }, 800);
+            }, 1500); 
+        });
 
-        const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
-        let fullTeamData = [];
-
-        // Translations 
+        // Translations Object
         const translations = {
             bn: {
                 page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে",
                 logo: "সহযাত্রী",
-                nav_home: "হোম", nav_notice: "বিজ্ঞপ্তি", nav_vision: "লক্ষ্য", 
-                nav_plan: "পরিকল্পনা", nav_contrib: "অবদান", nav_team: "টিম", nav_network: "নেটওয়ার্ক",
-                nav_location: "লোকেশন", nav_leaderboard: "লিডারবোর্ড", nav_help: "হেল্প পোর্টাল",
-                hero_title: "সহযাত্রী",
-                slogan_bn: '"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"',
-                sec_notice: "সর্বশেষ <span>বিজ্ঞপ্তি</span>",
-                sec_vision: "আমাদের <span>লক্ষ্য</span>",
-                sec_plan: "আমাদের <span>পরিকল্পনা</span>",
-                sec_contrib: "আমাদের <span>অবদান</span>",
-                sec_team: "আমাদের <span>টিম</span>",
-                team_sub: "বিস্তারিত জানতে সদস্যের প্রোফাইলে ক্লিক করুন",
-                sec_network: "আমাদের <span>নেটওয়ার্ক</span>",
-                sec_location: "আমাদের <span>লোকেশন</span>",
-                location_sub: "আমরা যেখানে আমাদের কার্যক্রম পরিচালনা করছি",
-                sec_leaderboard: "মাসের সেরা <span>স্বেচ্ছাসেবক</span>",
-                leaderboard_sub: "যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম",
-                leader_work1: "সর্বাধিক প্রজেক্ট সম্পন্ন করেছেন", leader_work2: "সেরা ফান্ড রেইজার", leader_work3: "সেরা ক্যাম্পেইন অর্গানাইজার",
-                sec_help: "সাহায্যের <span>আবেদন</span>",
-                help_sub: "আপনার আশেপাশে কোনো শিশুর সাহায্য প্রয়োজন হলে আমাদের জানান",
-                form_name: "আপনার নাম (ঐচ্ছিক)", form_area: "এলাকা / লোকেশন *", form_details: "সমস্যার বিবরণ *", btn_submit: "আবেদন জমা দিন",
-                map_interactive_title: "লাইভ ইমপ্যাক্ট ম্যাপ", map_office_title: "আমাদের অফিস লোকেশন",
-                footer_text: "শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি সাতক্ষীরা জেলা জুড়ে।",
-                footer_copy: "© ২০২৬ সহযাত্রী - সাতক্ষীরা। আগামীর পথে আপনার সাথে।"
+                nav_home: "হোম", nav_vision: "লক্ষ্য", nav_plan: "পরিকল্পনা", nav_team: "টিম",
+                hero_title: "শিশুদের সুন্দর আগামী", slogan_bn: '"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"',
+                sec_notice: "সর্বশেষ বিজ্ঞপ্তি", sec_vision: "আমাদের লক্ষ্য", sec_plan: "আমাদের পরিকল্পনা",
+                sec_team: "আমাদের কারিগর", sec_location: "কার্যক্রমের অবস্থান",
+                team_sub: "যাদের হাত ধরে এগিয়ে যাচ্ছে 'সহযাত্রী' - বিস্তারিত জানতে ছবিতে ক্লিক করুন",
+                form_name: "আপনার নাম (ঐচ্ছিক)", form_area: "এলাকা / লোকেশন *", form_details: "সমস্যার বিস্তারিত বিবরণ লিখুন *", btn_submit: "আবেদন জমা দিন",
+                footer_text: "শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি।",
+                footer_copy: "© ২০২৬ সহযাত্রী - সাতক্ষীরা।"
             },
             en: {
-                page_title: "Shohojatri | With You on the Future Path",
+                page_title: "Shohojatri | Future With You",
                 logo: "Shohojatri",
-                nav_home: "Home", nav_notice: "Notice", nav_vision: "Vision", 
-                nav_plan: "Plan", nav_contrib: "Contribution", nav_team: "Team", nav_network: "Network",
-                nav_location: "Location", nav_leaderboard: "Leaderboard", nav_help: "Help Portal",
-                hero_title: "Shohojatri",
-                slogan_bn: '"A beautiful childhood will change the world of tomorrow"',
-                sec_notice: "Latest <span>Notices</span>",
-                sec_vision: "Our <span>Vision</span>",
-                sec_plan: "Our <span>Plan</span>",
-                sec_contrib: "Our <span>Contribution</span>",
-                sec_team: "Our <span>Team</span>",
-                team_sub: "Click on a member's profile for details",
-                sec_network: "Our <span>Network</span>",
-                sec_location: "Our <span>Location</span>",
-                location_sub: "Where we are operating our activities",
-                sec_leaderboard: "Volunteer <span>of the Month</span>",
-                leaderboard_sub: "Those whose relentless hard work is driving our activities forward",
-                leader_work1: "Completed Most Projects", leader_work2: "Best Fundraiser", leader_work3: "Best Campaign Organizer",
-                sec_help: "Request <span>Help</span>",
-                help_sub: "Let us know if any child around you needs help",
-                form_name: "Your Name (Optional)", form_area: "Area / Location *", form_details: "Problem Details *", btn_submit: "Submit Request",
-                map_interactive_title: "Live Impact Map", map_office_title: "Our Office Location",
-                footer_text: "We are working across Satkhira district with the determination to develop children and build a beautiful future.",
-                footer_copy: "© 2026 Shohojatri - Satkhira. With you on the path to the future."
+                nav_home: "Home", nav_vision: "Vision", nav_plan: "Plan", nav_team: "Team",
+                hero_title: "Beautiful Future for Children", slogan_bn: '"A beautiful childhood will change the world"',
+                sec_notice: "Latest Notice", sec_vision: "Our Vision", sec_plan: "Our Plan",
+                sec_team: "Our Team", sec_location: "Our Locations",
+                team_sub: "Click on a photo to learn more about the people driving Shohojatri",
+                form_name: "Your Name (Optional)", form_area: "Area / Location *", form_details: "Enter problem description *", btn_submit: "Submit Request",
+                footer_text: "We are working to develop children and build a beautiful future.",
+                footer_copy: "© 2026 Shohojatri - Satkhira."
             }
         };
 
-        let currentLang = 'bn';
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'bn' ? 'en' : 'bn';
-            document.getElementById('lang-toggle').innerText = currentLang === 'bn' ? 'EN' : 'BN';
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[currentLang][key]) {
-                    if (el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA') {
-                        el.innerHTML = translations[currentLang][key];
-                    }
-                }
-            });
-        }
-
-        // Scroll Logic for Progress Bar and Back to Top
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("myBar").style.width = scrolled + "%";
-
-            const btn = document.getElementById("backToTop");
-            if (winScroll > 300) { btn.style.display = "flex"; } else { btn.style.display = "none"; }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        // Dark Mode Logic
-        function toggleTheme() {
-            const body = document.getElementById('body');
-            const icon = document.getElementById('theme-toggle');
-            body.classList.toggle('dark-theme');
-            if(body.classList.contains('dark-theme')) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-            }
-        }
-
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-
-        // --- Leaflet Map Initialization ---
-        const map = L.map('impactMap').setView([22.7185, 89.0705], 10); // Satkhira Center Coordinates
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        // Location Data for Satkhira Districts
-        const impactLocations = [
-            { lat: 22.3304, lng: 89.1028, title: "শ্যামনগর", details: "শিক্ষা সামগ্রী বিতরণ" },
-            { lat: 22.4500, lng: 89.0333, title: "কালিগঞ্জ", details: "সাইবার সেফটি ওয়ার্কশপ" },
-            { lat: 22.5500, lng: 89.1500, title: "আশাশুনি", details: "মানসিক স্বাস্থ্য ক্যাম্প" },
-            { lat: 22.7185, lng: 89.0705, title: "সাতক্ষীরা সদর", details: "পথশিশু খাদ্য বিতরণ" }
-        ];
-
-        // Adding Markers
-        impactLocations.forEach(loc => {
-            L.marker([loc.lat, loc.lng]).addTo(map)
-                .bindPopup(`<b>${loc.title}</b><br>${loc.details}`);
+        // Custom Magic Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
         });
 
-        // Data Fetching
+        document.querySelectorAll('a, button, input, textarea, .creative-card, .close').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                cursor.style.background = 'rgba(245, 158, 11, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.background = 'transparent';
+            });
+        });
+
+        // Init Animations
+        AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        // Scroll Nav
+        window.onscroll = function() {
+            const nav = document.getElementById("navbar");
+            if(window.scrollY > 50) nav.classList.add('scrolled'); 
+            else nav.classList.remove('scrolled');
+        };
+
+        // Data Fetching and Rendering
+        const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
+        let fullTeamData = []; 
+        
         async function loadSheetData() {
             try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
+                const res = await fetch(API_URL);
+                const data = await res.json();
 
                 renderGeneral(data, 'Notice', 'notice-data');
                 renderGeneral(data, 'Vision', 'vision-data');
                 renderGeneral(data, 'Plan', 'plan-data');
-                renderGeneral(data, 'Contribution', 'contribution-data');
                 
-                fullTeamData = data.filter(item => item.Category === 'Team');
+                fullTeamData = data.filter(i => i.Category === 'Team');
                 renderTeam(fullTeamData);
-                renderSocial(data);
-
-            } catch (error) {
-                console.error("Data fetch error:", error);
-            }
+            } catch (err) { console.error("Error:", err); }
         }
 
-        function renderGeneral(data, category, elementId) {
-            const container = document.getElementById(elementId);
-            const filtered = data.filter(item => item.Category === category);
-            container.innerHTML = filtered.map(item => `
-                <div class="card">
-                    <i class="${item.Icon || 'fas fa-star'}"></i>
+        function renderGeneral(data, cat, elId) {
+            const container = document.getElementById(elId);
+            if(!container) return;
+            const items = data.filter(i => i.Category === cat);
+            container.innerHTML = items.map((item, idx) => `
+                <div class="creative-card" data-aos="fade-up" data-aos-delay="${idx * 100}">
+                    <div class="card-icon"><i class="${item.Icon || 'fas fa-star'}"></i></div>
                     <h3>${item.Title}</h3>
                     <p>${item.Description}</p>
                 </div>
@@ -511,56 +423,87 @@
 
         function renderTeam(team) {
             const container = document.getElementById('team-data');
-            container.innerHTML = team.map((member, index) => `
-                <div class="card team-card" onclick="openProfile(${index})">
-                    <img src="${member.Image || 'https://via.placeholder.com/150'}" alt="${member.Name} এর ছবি">
-                    <h3>${member.Name}</h3>
-                    <span class="role">${member.Role}</span>
-                    <p style="font-size:0.9rem; opacity:0.8;">${member.Work}</p>
+            if(!container) return;
+            container.innerHTML = team.map((m, i) => `
+                <div class="creative-card team-card" onclick="openProfile(${i})" data-aos="zoom-in" data-aos-delay="${i * 100}">
+                    <img src="${m.Image || 'https://via.placeholder.com/150'}" class="team-img-blob" alt="${m.Name}">
+                    <h3>${m.Name}</h3>
+                    <span style="color: var(--primary-light); font-weight:700; letter-spacing:1px; font-size:0.9rem; text-transform:uppercase;">${m.Role}</span>
                 </div>
             `).join('');
         }
 
-        function renderSocial(data) {
-            const container = document.getElementById('social-data');
-            const socials = data.filter(item => item.Category === 'Social');
-            container.innerHTML = socials.map(item => `
-                <a href="${item.FB}" target="_blank" style="text-decoration: none; color: inherit;">
-                    <div class="card" style="padding: 30px;">
-                        <i class="${item.Icon || 'fas fa-link'}"></i>
-                        <h3>${item.Title}</h3>
-                    </div>
-                </a>
-            `).join('');
-        }
+        // Modal Functionality
+        const modal = document.getElementById('profileModal');
+        
+        function openProfile(idx) {
+            const m = fullTeamData[idx];
+            document.getElementById('modalImg').src = m.Image || 'https://via.placeholder.com/150';
+            document.getElementById('modalName').innerText = m.Name;
+            document.getElementById('modalRole').innerText = m.Role;
+            document.getElementById('modalBio').innerText = m.Details || m.Work || "বিস্তারিত তথ্য শীঘ্রই যুক্ত করা হবে।";
+            
+            const fb = document.getElementById('modalFB');
+            fb.href = m.FB || "#"; fb.style.display = m.FB ? "flex" : "none";
+            
+            const wa = document.getElementById('modalWA');
+            wa.href = m.Whatsapp ? `https://wa.me/${m.Whatsapp}` : "#"; wa.style.display = m.Whatsapp ? "flex" : "none";
+            
+            const mail = document.getElementById('modalMail');
+            mail.href = m.Email ? `mailto:${m.Email}` : "#"; mail.style.display = m.Email ? "flex" : "none";
 
-        function openProfile(index) {
-            const member = fullTeamData[index];
-            document.getElementById('modalImg').src = member.Image || 'https://via.placeholder.com/150';
-            document.getElementById('modalName').innerText = member.Name;
-            document.getElementById('modalRole').innerText = member.Role;
-            document.getElementById('modalBio').innerText = member.Details || member.Work || (currentLang === 'bn' ? "বিস্তারিত তথ্য শীঘ্রই যুক্ত করা হবে।" : "Detailed info will be added soon.");
-            
-            document.getElementById('modalFB').href = member.FB || "#";
-            document.getElementById('modalFB').style.display = member.FB ? "inline-block" : "none";
-            
-            document.getElementById('modalWA').href = member.Whatsapp ? `https://wa.me/${member.Whatsapp}` : "#";
-            document.getElementById('modalWA').style.display = member.Whatsapp ? "inline-block" : "none";
-            
-            document.getElementById('modalMail').href = member.Email ? `mailto:${member.Email}` : "#";
-            document.getElementById('modalMail').style.display = member.Email ? "inline-block" : "none";
-
-            document.getElementById('profileModal').style.display = "block";
+            modal.style.display = "flex";
+            setTimeout(() => modal.classList.add("active"), 10);
             document.body.style.overflow = "hidden";
         }
 
         function closeModal() {
-            document.getElementById('profileModal').style.display = "none";
-            document.body.style.overflow = "auto";
+            modal.classList.remove("active");
+            setTimeout(() => { modal.style.display = "none"; document.body.style.overflow = "auto"; }, 400);
+        }
+        
+        window.onclick = function(e) { 
+            if (e.target === modal) closeModal(); 
         }
 
-        window.onclick = function(e) { if (e.target.className === 'modal') closeModal(); }
+        // Map Setup
+        const map = L.map('impactMap').setView([22.7185, 89.0705], 10);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+        
+        const locs = [
+            { lat: 22.3304, lng: 89.1028, title: "শ্যামনগর", details: "শিক্ষা সামগ্রী বিতরণ" },
+            { lat: 22.4500, lng: 89.0333, title: "কালিগঞ্জ", details: "স্বাস্থ্য ক্যাম্প" },
+            { lat: 22.7185, lng: 89.0705, title: "সাতক্ষীরা সদর", details: "খাদ্য বিতরণ" }
+        ];
+
+        const magicIcon = L.divIcon({
+            html: '<div style="background:var(--secondary); width:25px; height:25px; border-radius:50%; border:3px solid #fff; box-shadow:0 0 15px var(--secondary);"></div>',
+            className: '', iconSize: [25, 25], iconAnchor: [12, 12]
+        });
+
+        locs.forEach(l => {
+            L.marker([l.lat, l.lng], {icon: magicIcon}).addTo(map)
+             .bindPopup(`<b>${l.title}</b><br>${l.details}`);
+        });
+
         window.onload = loadSheetData;
+
+        // Language Toggle
+        let isBn = true;
+        function toggleLanguage() {
+            isBn = !isBn;
+            currentLang = isBn ? 'bn' : 'en';
+            document.getElementById('lang-toggle').innerText = isBn ? 'EN' : 'BN';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[currentLang][key]) el.placeholder = translations[currentLang][key];
+            });
+        }
     </script>
 </body>
 </html>
