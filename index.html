@@ -46,13 +46,15 @@
             line-height: 1.8; overflow-x: hidden;
         }
 
+        /* --- Custom Logo Sizing (Updated) --- */
         .logo img, .preloader-logo img, footer h2 img {
-            height: 70px; 
+            height: 70px; /* লোগোর সাইজ বড় করা হয়েছে (আগে 40px ছিল)। আরও বড় চাইলে 80px বা 90px করতে পারেন */
             width: auto;
             object-fit: contain;
             border-radius: 8px;
         }
 
+        /* Cinematic Preloader */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #115E59; z-index: 9999999; display: flex; flex-direction: column;
@@ -62,6 +64,7 @@
         .preloader-text { color: var(--secondary); font-size: 1.2rem; margin-top: 15px; font-weight: 300; letter-spacing: 2px; }
         @keyframes pulseGlow { 0% { text-shadow: 0 0 10px rgba(245,158,11,0.2); transform: scale(1); } 100% { text-shadow: 0 0 30px rgba(245,158,11,0.8); transform: scale(1.05); } }
 
+        /* Floating Nav */
         nav { 
             position: fixed; top: 0; left: 0; width: 100%; padding: 20px 8%;
             background: transparent; display: flex; justify-content: space-between; align-items: center; 
@@ -74,6 +77,7 @@
         
         .nav-right { display: flex; align-items: center; gap: 20px; }
         
+        /* Desktop Menu */
         .nav-links { display: flex; list-style: none; gap: 20px; }
         .nav-links li a { text-decoration: none; color: #fff; font-weight: 600; font-size: 0.95rem; transition: 0.3s; position: relative; }
         nav.scrolled .nav-links li a { color: var(--text-dark); }
@@ -87,9 +91,11 @@
         }
         nav.scrolled #lang-toggle { background: var(--primary); color: #fff; border-color: var(--primary); }
 
+        /* Mobile Menu Toggle Button */
         .menu-toggle { display: none; font-size: 28px; color: #fff; cursor: none; z-index: 10001; transition: 0.3s; }
         nav.scrolled .menu-toggle { color: var(--primary); }
 
+        /* Hero Section */
         .hero { 
             height: 100vh; position: relative; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; text-align: center; padding: 0 20px;
@@ -98,7 +104,12 @@
         }
         .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(17, 94, 89, 0.7), rgba(0,0,0,0.5)); z-index: 1; }
         
-        .firefly { position: absolute; width: 4px; height: 4px; background: var(--secondary); border-radius: 50%; box-shadow: 0 0 10px 2px var(--secondary); z-index: 2; animation: fly 10s infinite alternate; opacity: 0.6; }
+        .firefly { position: absolute; width: 4px; height: 4px; background: var(--secondary); border-radius: 50%; box-shadow: 0 0 10px 2px var(--secondary); z-index: 2; animation: fly random(10s) infinite alternate; opacity: 0.6; }
+        .firefly:nth-child(1) { top: 20%; left: 10%; animation: fly 8s ease-in-out infinite alternate; }
+        .firefly:nth-child(2) { top: 60%; left: 80%; animation: fly 12s ease-in-out infinite alternate-reverse; }
+        .firefly:nth-child(3) { top: 80%; left: 30%; animation: fly 9s ease-in-out infinite alternate; }
+        .firefly:nth-child(4) { top: 30%; left: 60%; animation: fly 15s ease-in-out infinite alternate-reverse; }
+        .firefly:nth-child(5) { top: 50%; left: 50%; animation: fly 10s ease-in-out infinite alternate; }
         @keyframes fly { 0% { transform: translate(0, 0) scale(1); opacity: 0.3; } 50% { opacity: 1; } 100% { transform: translate(100px, -100px) scale(1.5); opacity: 0.3; } }
 
         .hero-content { position: relative; z-index: 3; }
@@ -109,6 +120,7 @@
         .wave-bottom svg { display: block; width: calc(100% + 1.3px); height: 120px; }
         .wave-bottom .shape-fill { fill: var(--bg-light); }
 
+        /* Sections */
         .section { padding: 120px 5%; max-width: 1350px; margin: 0 auto; position: relative; }
         .section-title { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; color: var(--primary); margin-bottom: 15px; text-align: center; }
         .section-sub { text-align: center; color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 60px; }
@@ -119,8 +131,11 @@
             background: var(--card-bg); border-radius: 30px; padding: 50px 40px;
             box-shadow: var(--shadow-dream); border: 1px solid rgba(0,0,0,0.02);
             transition: var(--transition); position: relative; overflow: hidden;
+            transform-style: preserve-3d;
         }
+        .creative-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(20, 184, 166, 0.05) 0%, transparent 60%); opacity: 0; transition: var(--transition); pointer-events: none; }
         .creative-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(17, 94, 89, 0.1); }
+        .creative-card:hover::after { opacity: 1; transform: scale(1.2); }
 
         .card-icon { 
             width: 80px; height: 80px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; 
@@ -131,40 +146,87 @@
         }
         @keyframes organicBlob { 0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(10deg); } }
         
+        .creative-card h3 { font-size: 1.6rem; margin-bottom: 15px; font-weight: 700; color: var(--text-dark); }
+        .creative-card p { color: var(--text-muted); font-size: 1.05rem; }
+
+        /* Team Section */
         .team-img-blob { 
             width: 160px; height: 160px; margin: 0 auto 25px; object-fit: cover;
             border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
             border: 4px solid var(--secondary); padding: 4px;
             animation: morph 8s ease-in-out infinite; transition: var(--transition);
         }
-        @keyframes morph { 0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; } 67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; } }
+        @keyframes morph { 
+            0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 
+            34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; } 
+            67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; } 
+        }
+        .creative-card.team-card { text-align: center; cursor: none; }
+        .creative-card.team-card:hover .team-img-blob { transform: scale(1.1); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.3); border-color: var(--primary-light); }
 
+        /* Team Details Modal */
         .modal { display: none; position: fixed; z-index: 300000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(17, 94, 89, 0.8); backdrop-filter: blur(10px); opacity: 0; transition: 0.4s; align-items: center; justify-content: center; }
         .modal.active { opacity: 1; }
-        .modal-content { background: #fff; width: 90%; max-width: 480px; border-radius: 40px; padding: 50px 40px; text-align: center; position: relative; transform: scale(0.9) translateY(30px); transition: 0.5s; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: #fff; width: 90%; max-width: 480px; border-radius: 40px; padding: 50px 40px; text-align: center; position: relative; transform: scale(0.9) translateY(30px); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 40px 80px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto; }
         .modal.active .modal-content { transform: scale(1) translateY(0); }
-        .close { position: absolute; right: 25px; top: 25px; font-size: 24px; color: var(--text-muted); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-light); cursor: none; }
+        .close { position: absolute; right: 25px; top: 25px; font-size: 24px; color: var(--text-muted); transition: 0.3s; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-light); border: 1px solid rgba(0,0,0,0.05); cursor: none; }
+        .close:hover { color: var(--accent); background: rgba(244, 63, 94, 0.1); transform: rotate(90deg); }
+        
+        .modal-bio { margin-top: 25px; font-size: 1.05rem; color: var(--text-dark); background: var(--bg-light); padding: 25px; border-radius: 20px; text-align: left; line-height: 1.6; border-left: 4px solid var(--primary-light); }
+        .social-btns { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+        .s-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: none; }
+        .s-btn:hover { transform: translateY(-5px) scale(1.1); }
 
+        /* Help Portal */
         .help-portal-wrapper {
             background: linear-gradient(rgba(17,94,89,0.9), rgba(17,94,89,0.9)), url('https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
-            padding: 100px 5%; border-radius: 40px; margin: 50px 2%; color: #fff;
+            padding: 100px 5%; border-radius: 40px; margin: 50px 2%; color: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.2);
         }
         .help-form-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); padding: 50px; border-radius: 30px; max-width: 800px; margin: 0 auto; }
         .form-control { width: 100%; padding: 18px 25px; margin-bottom: 25px; background: rgba(255,255,255,0.9); border: none; border-radius: 15px; font-size: 1.05rem; font-family: inherit; cursor: none; }
-        .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: #fff; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: 700; transition: 0.3s; cursor: none; }
-        .btn-submit:disabled { background: #9ca3af; cursor: not-allowed; }
+        .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: #fff; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: 700; transition: var(--transition); cursor: none; }
+        .btn-submit:hover { background: #fff; color: var(--secondary); transform: scale(1.02); }
 
+        /* Actions */
         .floating-actions { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 10000; }
         .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: white; transition: 0.3s; text-decoration: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2); cursor: none; }
         .fab-wa { background: #25D366; }
+        .fab:hover { transform: scale(1.1) rotate(10deg); }
 
         footer { text-align: center; padding: 80px 20px 40px; background: #0F172A; color: #fff; }
-        #impactMap { width: 100%; height: 500px; border-radius: 30px; border: 10px solid #fff; }
+        .map-wrapper { border-radius: 30px; overflow: hidden; border: 10px solid #fff; box-shadow: var(--shadow-dream); }
+        #impactMap { width: 100%; height: 500px; z-index: 1; }
 
+        /* --- Mobile Responsive Fixes & Mobile Menu --- */
         @media (max-width: 992px) {
-            .nav-links { position: fixed; top: 0; right: -100%; width: 75vw; height: 100vh; background: rgba(17, 94, 89, 0.98); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.4s; z-index: 9999; }
+            .nav-links { 
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75vw;
+                height: 100vh;
+                background: rgba(17, 94, 89, 0.98);
+                backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 25px;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+                z-index: 9999;
+            }
             .nav-links.active { right: 0; }
+            .nav-links li a { font-size: 1.4rem; color: #fff !important; }
+            .nav-links li a::after { background: #fff; }
+            
             .menu-toggle { display: block; }
+            .nav-right { gap: 15px; }
+            
+            .section { padding: 80px 5%; }
+            .logo img, .preloader-logo img, footer h2 img { height: 50px; } /* লোগো মোবাইলে একটু মানানসই সাইজ */
+
+            /* Disable Custom Cursor on Mobile */
             .magic-cursor, .magic-cursor-dot { display: none !important; }
             * { cursor: auto !important; }
         }
@@ -173,7 +235,9 @@
 <body>
 
     <div id="preloader">
-        <div class="preloader-logo"><img src="logo.png" alt="Logo"> সহযাত্রী</div>
+        <div class="preloader-logo">
+            <img src="logo.png" alt="Logo"> সহযাত্রী
+        </div>
         <div class="preloader-text">আগামীর পথে আপনার সাথে...</div>
     </div>
 
@@ -181,7 +245,9 @@
     <div class="magic-cursor-dot" id="cursor-dot"></div>
 
     <nav id="navbar">
-        <div class="logo"><img src="logo.png" alt="Logo"> <span data-i18n="logo">সহযাত্রী</span></div>
+        <div class="logo">
+            <img src="logo.png" alt="Logo"> <span data-i18n="logo">সহযাত্রী</span>
+        </div>
         <div class="nav-right">
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" data-i18n="nav_home">হোম</a></li>
@@ -201,13 +267,17 @@
 
     <section id="home" class="hero">
         <div class="hero-overlay"></div>
-        <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+        <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+        
         <div class="hero-content">
             <h1 data-aos="zoom-out" data-aos-duration="2000" data-i18n="hero_title">শিশুদের সুন্দর আগামী</h1>
             <p class="slogan-bn" data-aos="fade-up" data-aos-delay="500" data-i18n="slogan_bn">"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"</p>
         </div>
+
         <div class="wave-bottom">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C-1,95.8,110.15,116.48,220.6,116.48,255.4,116.48,289.8,103.8,321.39,56.44Z" class="shape-fill"></path></svg>
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C-1,95.8,110.15,116.48,220.6,116.48,255.4,116.48,289.8,103.8,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
         </div>
     </section>
 
@@ -218,6 +288,7 @@
 
     <section id="vision" class="section" style="background: #fff; border-radius: 40px; padding-bottom: 120px;">
         <h2 class="section-title" data-aos="fade-up" data-i18n="sec_vision">আমাদের লক্ষ্য</h2>
+        <p class="section-sub">যে স্বপ্ন বুকে ধারণ করে আমরা দুর্বার গতিতে এগিয়ে চলছি</p>
         <div id="vision-data" class="grid-container"></div>
     </section>
 
@@ -228,6 +299,7 @@
     
     <section id="leaderboard" class="section" style="background: #fff; border-radius: 40px; padding-bottom: 120px;">
         <h2 class="section-title" data-aos="fade-up" data-i18n="sec_leaderboard">সেরা স্বেচ্ছাসেবক</h2>
+        <p class="section-sub" data-i18n="leaderboard_sub">যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম</p>
         <div class="grid-container" data-aos="fade-up">
             <div class="creative-card" style="text-align: center;">
                 <div class="card-icon" style="background: linear-gradient(135deg, #FFD700, #FDB931); margin: 0 auto 20px;"><i class="fas fa-trophy"></i></div>
@@ -239,6 +311,11 @@
                 <h3>তৃণা মিত্র</h3>
                 <p data-i18n="leader_work2">সেরা ফান্ড রেইজার</p>
             </div>
+            <div class="creative-card" style="text-align: center;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #CD7F32, #A0522D); margin: 0 auto 20px;"><i class="fas fa-award"></i></div>
+                <h3>Anamika Arna</h3>
+                <p data-i18n="leader_work3">সেরা ক্যাম্পেইন অর্গানাইজার</p>
+            </div>
         </div>
     </section>
 
@@ -247,16 +324,17 @@
         <p style="text-align:center; margin-bottom: 50px; font-size:1.1rem; opacity:0.9;" data-i18n="help_sub">আপনার চারপাশে কোনো শিশুর চিকিৎসা বা শিক্ষার প্রয়োজন হলে আমাদের জানান</p>
         
         <div class="help-form-container" data-aos="zoom-in">
-            <form id="helpRequestForm">
+            <form id="helpForm" action="https://formsubmit.co/yeasinkabir0000@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Shohojatri Cinematic Portal Request!">
+                <input type="hidden" name="_captcha" value="false">
+                
                 <input type="text" name="Name" class="form-control" placeholder="আপনার নাম (ঐচ্ছিক)" data-i18n-placeholder="form_name">
                 <input type="text" name="Location" class="form-control" required placeholder="এলাকা / লোকেশন *" data-i18n-placeholder="form_area">
                 <textarea name="Details" class="form-control" rows="4" required placeholder="সমস্যার বিস্তারিত বিবরণ লিখুন *" data-i18n-placeholder="form_details"></textarea>
                 
-                <button type="submit" id="submitBtn" class="btn-submit">
-                    <span id="btnText" data-i18n="btn_submit">আবেদন জমা দিন</span> 
-                    <i class="fas fa-paper-plane" style="margin-left: 10px;"></i>
-                </button>
+                <button type="submit" id="submitBtn" class="btn-submit" data-i18n="btn_submit">আবেদন জমা দিন <i class="fas fa-paper-plane" style="margin-left: 10px;"></i></button>
             </form>
+            <div id="formStatus" style="text-align: center; margin-top: 20px; font-weight: bold; font-size: 1.1rem; display: none; padding: 10px; border-radius: 10px; background: rgba(255,255,255,0.9);"></div>
         </div>
     </div>
     
@@ -267,21 +345,30 @@
 
     <section id="about" class="section" style="background: #fff; border-radius: 40px;">
         <h2 class="section-title" data-aos="fade-up" data-i18n="sec_team">আমাদের কারিগর</h2>
+        <p class="section-sub" data-i18n="team_sub">যাদের হাত ধরে এগিয়ে যাচ্ছে 'সহযাত্রী' - বিস্তারিত জানতে ছবিতে ক্লিক করুন</p>
         <div id="team-data" class="grid-container"></div>
     </section>
 
     <section id="location" class="section">
         <h2 class="section-title" data-aos="fade-up" data-i18n="sec_location">কার্যক্রমের অবস্থান</h2>
-        <div id="impactMap" data-aos="fade-up"></div>
+        <div class="map-wrapper" data-aos="fade-up">
+            <div id="impactMap"></div>
+        </div>
     </section>
 
     <div id="profileModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()"><i class="fas fa-times"></i></span>
-            <img id="modalImg" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--secondary); margin-bottom: 15px; object-fit: cover;" src="">
-            <h2 id="modalName" style="color: var(--primary); margin-bottom: 5px;"></h2>
-            <span id="modalRole" style="color: var(--primary-light); font-weight: 700;"></span>
-            <div id="modalBio" style="margin-top:20px; text-align:left; padding:20px; background:#f9f9f9; border-radius:15px;"></div>
+            <img id="modalImg" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--secondary); padding: 3px; margin-bottom: 15px; object-fit: cover;" src="">
+            <h2 id="modalName" style="font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 5px;"></h2>
+            <span id="modalRole" style="color: var(--primary-light); font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;"></span>
+            <div id="modalBio" class="modal-bio"></div>
+            
+            <div class="social-btns">
+                <a id="modalFB" href="#" target="_blank" class="s-btn" style="background: #1877F2;"><i class="fab fa-facebook-f"></i></a>
+                <a id="modalWA" href="#" target="_blank" class="s-btn" style="background: #25D366;"><i class="fab fa-whatsapp"></i></a>
+                <a id="modalMail" href="#" class="s-btn" style="background: #EA4335;"><i class="fas fa-envelope"></i></a>
+            </div>
         </div>
     </div>
 
@@ -290,100 +377,227 @@
     </div>
 
     <footer>
-        <h2 style="display: flex; align-items: center; justify-content: center; gap: 10px;"><img src="logo.png" alt="Logo"> <span data-i18n="logo">সহযাত্রী</span></h2>
-        <p data-i18n="footer_copy">© ২০২৬ সহযাত্রী - সাতক্ষীরা।</p>
+        <h2 style="font-size: 2rem; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <img src="logo.png" alt="Logo"> <span data-i18n="logo">সহযাত্রী</span>
+        </h2>
+        <p style="opacity: 0.7; margin-bottom: 20px;" data-i18n="footer_text">শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি।</p>
+        <p style="font-size: 0.9rem; opacity: 0.5;" data-i18n="footer_copy">© ২০২৬ সহযাত্রী - সাতক্ষীরা।</p>
     </footer>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     
     <script>
-        // Preloader
+        // Cinematic Preloader
         window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
             setTimeout(() => {
-                document.getElementById('preloader').style.opacity = '0';
-                setTimeout(() => { document.getElementById('preloader').style.display = 'none'; }, 800);
+                preloader.style.opacity = '0';
+                setTimeout(() => { preloader.style.display = 'none'; }, 800);
             }, 1500); 
         });
 
-        // Translation
+        // Translations Object with all section items
         const translations = {
             bn: {
-                page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে", logo: "সহযাত্রী",
-                nav_home: "হোম", nav_notice: "বিজ্ঞপ্তি", nav_vision: "লক্ষ্য", nav_plan: "পরিকল্পনা", 
-                nav_leaderboard: "লিডারবোর্ড", nav_help: "সাহায্য", nav_contrib: "অবদান", nav_team: "টিম", nav_location: "লোকেশন",
+                page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে",
+                logo: "সহযাত্রী",
+                nav_home: "হোম", nav_notice: "বিজ্ঞপ্তি", nav_vision: "লক্ষ্য", 
+                nav_plan: "পরিকল্পনা", nav_leaderboard: "লিডারবোর্ড", nav_help: "সাহায্য",
+                nav_contrib: "অবদান", nav_team: "টিম", nav_location: "লোকেশন",
                 hero_title: "শিশুদের সুন্দর আগামী", slogan_bn: '"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"',
                 sec_notice: "সর্বশেষ বিজ্ঞপ্তি", sec_vision: "আমাদের লক্ষ্য", sec_plan: "আমাদের পরিকল্পনা",
-                sec_leaderboard: "সেরা স্বেচ্ছাসেবক", sec_help: "সাহায্যের আবেদন", help_sub: "আপনার চারপাশে কোনো শিশুর চিকিৎসা বা শিক্ষার প্রয়োজন হলে আমাদের জানান",
+                sec_leaderboard: "সেরা স্বেচ্ছাসেবক", leaderboard_sub: "যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম",
+                leader_work1: "সর্বাধিক প্রজেক্ট সম্পন্ন করেছেন", leader_work2: "সেরা ফান্ড রেইজার", leader_work3: "সেরা ক্যাম্পেইন অর্গানাইজার",
+                sec_help: "সাহায্যের আবেদন", help_sub: "আপনার চারপাশে কোনো শিশুর চিকিৎসা বা শিক্ষার প্রয়োজন হলে আমাদের জানান",
                 sec_contrib: "আমাদের অবদান", sec_team: "আমাদের কারিগর", sec_location: "কার্যক্রমের অবস্থান",
-                form_name: "আপনার নাম (ঐচ্ছিক)", form_area: "এলাকা / লোকেশন *", form_details: "সমস্যার বিস্তারিত বিবরণ লিখুন *", 
-                btn_submit: "আবেদন জমা দিন", footer_copy: "© ২০২৬ সহযাত্রী - সাতক্ষীরা।"
+                team_sub: "যাদের হাত ধরে এগিয়ে যাচ্ছে 'সহযাত্রী' - বিস্তারিত জানতে ছবিতে ক্লিক করুন",
+                form_name: "আপনার নাম (ঐচ্ছিক)", form_area: "এলাকা / লোকেশন *", form_details: "সমস্যার বিস্তারিত বিবরণ লিখুন *", btn_submit: "আবেদন জমা দিন",
+                footer_text: "শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি।",
+                footer_copy: "© ২০২৬ সহযাত্রী - সাতক্ষীরা।"
             },
             en: {
-                page_title: "Shohojatri | Future With You", logo: "Shohojatri",
-                nav_home: "Home", nav_notice: "Notice", nav_vision: "Vision", nav_plan: "Plan", 
-                nav_leaderboard: "Awards", nav_help: "Help", nav_contrib: "Impact", nav_team: "Team", nav_location: "Location",
+                page_title: "Shohojatri | Future With You",
+                logo: "Shohojatri",
+                nav_home: "Home", nav_notice: "Notice", nav_vision: "Vision", 
+                nav_plan: "Plan", nav_leaderboard: "Awards", nav_help: "Help",
+                nav_contrib: "Impact", nav_team: "Team", nav_location: "Location",
                 hero_title: "Beautiful Future for Children", slogan_bn: '"A beautiful childhood will change the world"',
                 sec_notice: "Latest Notice", sec_vision: "Our Vision", sec_plan: "Our Plan",
-                sec_leaderboard: "Top Volunteers", sec_help: "Request Help", help_sub: "Let us know if any child needs assistance",
+                sec_leaderboard: "Top Volunteers", leaderboard_sub: "Those whose relentless hard work is driving our activities forward",
+                leader_work1: "Completed Most Projects", leader_work2: "Best Fundraiser", leader_work3: "Best Campaign Organizer",
+                sec_help: "Request Help", help_sub: "Let us know if any child needs medical or educational assistance",
                 sec_contrib: "Our Impact", sec_team: "Our Team", sec_location: "Our Locations",
-                form_name: "Your Name (Optional)", form_area: "Area / Location *", form_details: "Enter problem description *", 
-                btn_submit: "Submit Request", footer_copy: "© 2026 Shohojatri - Satkhira."
+                team_sub: "Click on a photo to learn more about the people driving Shohojatri",
+                form_name: "Your Name (Optional)", form_area: "Area / Location *", form_details: "Enter problem description *", btn_submit: "Submit Request",
+                footer_text: "We are working to develop children and build a beautiful future.",
+                footer_copy: "© 2026 Shohojatri - Satkhira."
             }
         };
 
-        // AJAX Form Submission
-        document.getElementById('helpRequestForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const originalText = btnText.innerText;
+        // --- Mobile Menu Toggle Logic ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const menuIcon = mobileMenuBtn.querySelector('i');
 
-            btn.disabled = true;
-            btnText.innerText = isBn ? "পাঠানো হচ্ছে..." : "Sending...";
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            if(navLinks.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
 
-            const formData = new FormData(this);
-            const data = {};
-            formData.forEach((value, key) => data[key] = value);
-
-            fetch("https://formsubmit.co/ajax/yeasinkabir0000@gmail.com", {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success === "true") {
-                    alert(isBn ? "আপনার আবেদনটি সফলভাবে পাঠানো হয়েছে!" : "Request sent successfully!");
-                    this.reset();
-                } else { alert("Error: " + data.message); }
-            })
-            .catch(() => alert(isBn ? "দুঃখিত, আবার চেষ্টা করুন।" : "Something went wrong."))
-            .finally(() => {
-                btn.disabled = false;
-                btnText.innerText = originalText;
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links li a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
             });
         });
 
-        // Mobile Menu
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        mobileMenuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
-
-        // Magic Cursor
+        // Custom Magic Cursor Logic (Disabled on mobile via CSS)
         const cursor = document.getElementById('cursor');
         const cursorDot = document.getElementById('cursor-dot');
+        
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = cursorDot.style.left = e.clientX + 'px';
-            cursor.style.top = cursorDot.style.top = e.clientY + 'px';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
         });
+
+        document.querySelectorAll('a, button, input, textarea, .creative-card, .close, .menu-toggle').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                cursor.style.background = 'rgba(245, 158, 11, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.background = 'transparent';
+            });
+        });
+
+        // Init Animations
+        AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        // Scroll Nav
+        window.onscroll = function() {
+            const nav = document.getElementById("navbar");
+            if(window.scrollY > 50) nav.classList.add('scrolled'); 
+            else nav.classList.remove('scrolled');
+        };
+
+        // Data Fetching and Rendering
+        const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
+        let fullTeamData = []; 
+        
+        async function loadSheetData() {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+
+                renderGeneral(data, 'Notice', 'notice-data');
+                renderGeneral(data, 'Vision', 'vision-data');
+                renderGeneral(data, 'Plan', 'plan-data');
+                renderGeneral(data, 'Contribution', 'contribution-data');
+                
+                fullTeamData = data.filter(i => i.Category === 'Team');
+                renderTeam(fullTeamData);
+            } catch (err) { console.error("Error:", err); }
+        }
+
+        function renderGeneral(data, cat, elId) {
+            const container = document.getElementById(elId);
+            if(!container) return;
+            const items = data.filter(i => i.Category === cat);
+            container.innerHTML = items.map((item, idx) => `
+                <div class="creative-card" data-aos="fade-up" data-aos-delay="${idx * 100}">
+                    <div class="card-icon"><i class="${item.Icon || 'fas fa-star'}"></i></div>
+                    <h3>${item.Title}</h3>
+                    <p>${item.Description}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderTeam(team) {
+            const container = document.getElementById('team-data');
+            if(!container) return;
+            container.innerHTML = team.map((m, i) => `
+                <div class="creative-card team-card" onclick="openProfile(${i})" data-aos="zoom-in" data-aos-delay="${i * 100}">
+                    <img src="${m.Image || 'https://via.placeholder.com/150'}" class="team-img-blob" alt="${m.Name}">
+                    <h3>${m.Name}</h3>
+                    <span style="color: var(--primary-light); font-weight:700; letter-spacing:1px; font-size:0.9rem; text-transform:uppercase;">${m.Role}</span>
+                </div>
+            `).join('');
+        }
+
+        // Modal Functionality
+        const modal = document.getElementById('profileModal');
+        
+        function openProfile(idx) {
+            const m = fullTeamData[idx];
+            document.getElementById('modalImg').src = m.Image || 'https://via.placeholder.com/150';
+            document.getElementById('modalName').innerText = m.Name;
+            document.getElementById('modalRole').innerText = m.Role;
+            document.getElementById('modalBio').innerText = m.Details || m.Work || "বিস্তারিত তথ্য শীঘ্রই যুক্ত করা হবে।";
+            
+            const fb = document.getElementById('modalFB');
+            fb.href = m.FB || "#"; fb.style.display = m.FB ? "flex" : "none";
+            
+            const wa = document.getElementById('modalWA');
+            wa.href = m.Whatsapp ? `https://wa.me/${m.Whatsapp}` : "#"; wa.style.display = m.Whatsapp ? "flex" : "none";
+            
+            const mail = document.getElementById('modalMail');
+            mail.href = m.Email ? `mailto:${m.Email}` : "#"; mail.style.display = m.Email ? "flex" : "none";
+
+            modal.style.display = "flex";
+            setTimeout(() => modal.classList.add("active"), 10);
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            modal.classList.remove("active");
+            setTimeout(() => { modal.style.display = "none"; document.body.style.overflow = "auto"; }, 400);
+        }
+        
+        window.onclick = function(e) { 
+            if (e.target === modal) closeModal(); 
+        }
+
+        // Map Setup
+        const map = L.map('impactMap').setView([22.7185, 89.0705], 10);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+        
+        const locs = [
+            { lat: 22.3304, lng: 89.1028, title: "শ্যামনগর", details: "শিক্ষা সামগ্রী বিতরণ" },
+            { lat: 22.4500, lng: 89.0333, title: "কালিগঞ্জ", details: "স্বাস্থ্য ক্যাম্প" },
+            { lat: 22.7185, lng: 89.0705, title: "সাতক্ষীরা সদর", details: "খাদ্য বিতরণ" }
+        ];
+
+        const magicIcon = L.divIcon({
+            html: '<div style="background:var(--secondary); width:25px; height:25px; border-radius:50%; border:3px solid #fff; box-shadow:0 0 15px var(--secondary);"></div>',
+            className: '', iconSize: [25, 25], iconAnchor: [12, 12]
+        });
+
+        locs.forEach(l => {
+            L.marker([l.lat, l.lng], {icon: magicIcon}).addTo(map)
+             .bindPopup(`<b>${l.title}</b><br>${l.details}`);
+        });
+
+        window.onload = loadSheetData;
 
         // Language Toggle
         let isBn = true;
         function toggleLanguage() {
             isBn = !isBn;
-            const currentLang = isBn ? 'bn' : 'en';
+            currentLang = isBn ? 'bn' : 'en';
             document.getElementById('lang-toggle').innerText = isBn ? 'EN' : 'BN';
+            
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
@@ -394,73 +608,60 @@
             });
         }
 
-        // AOS & Map
-        AOS.init({ duration: 1000, once: true });
-        const map = L.map('impactMap').setView([22.7185, 89.0705], 11);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
-        L.marker([22.7185, 89.0705]).addTo(map).bindPopup("<b>সাতক্ষীরা সদর</b><br>প্রধান কেন্দ্র");
+        // --- AJAX Form Submission Logic (NEW) ---
+        const helpForm = document.getElementById('helpForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
 
-        // Data Rendering (SheetDB)
-        const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
-        let fullTeamData = [];
-        async function loadData() {
-            try {
-                const res = await fetch(API_URL);
-                const data = await res.json();
-                renderCat(data, 'Notice', 'notice-data');
-                renderCat(data, 'Vision', 'vision-data');
-                renderCat(data, 'Plan', 'plan-data');
-                renderCat(data, 'Contribution', 'contribution-data');
-                fullTeamData = data.filter(i => i.Category === 'Team');
-                renderTeam(fullTeamData);
-            } catch (err) { console.error(err); }
+        if(helpForm) {
+            helpForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Default submission বন্ধ করবে
+                
+                // বাটনটিকে লোডিং স্টেটে নিয়ে যাওয়া
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'অপেক্ষা করুন... <i class="fas fa-spinner fa-spin" style="margin-left: 10px;"></i>';
+                submitBtn.disabled = true;
+                
+                const formData = new FormData(this);
+                
+                // Formsubmit-এর AJAX endpoint-এ রিকোয়েস্ট পাঠানো
+                fetch("https://formsubmit.co/ajax/yeasinkabir0000@gmail.com", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    formStatus.style.display = 'block';
+                    if(data.success) {
+                        formStatus.style.color = 'var(--primary)';
+                        formStatus.innerText = 'ধন্যবাদ! আপনার আবেদনটি সফলভাবে জমা হয়েছে।';
+                        helpForm.reset(); // ফর্মের লেখাগুলো মুছে দেওয়া
+                    } else {
+                        formStatus.style.color = 'var(--accent)';
+                        formStatus.innerText = 'দুঃখিত, কোনো একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।';
+                    }
+                })
+                .catch(error => {
+                    formStatus.style.display = 'block';
+                    formStatus.style.color = 'var(--accent)';
+                    formStatus.innerText = 'দুঃখিত, কোনো একটি সমস্যা হয়েছে। ইন্টারনেট কানেকশন চেক করে আবার চেষ্টা করুন।';
+                    console.error('Error submitting form:', error);
+                })
+                .finally(() => {
+                    // বাটন আগের অবস্থায় ফিরিয়ে আনা
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    // ৫ সেকেন্ড পর সাকসেস মেসেজ হাইড করে দেওয়া
+                    setTimeout(() => { 
+                        formStatus.style.display = 'none'; 
+                    }, 5000); 
+                });
+            });
         }
-
-        function renderCat(data, cat, id) {
-            const el = document.getElementById(id);
-            if(!el) return;
-            el.innerHTML = data.filter(i => i.Category === cat).map(item => `
-                <div class="creative-card" data-aos="fade-up">
-                    <div class="card-icon"><i class="${item.Icon || 'fas fa-star'}"></i></div>
-                    <h3>${item.Title}</h3>
-                    <p>${item.Description}</p>
-                </div>
-            `).join('');
-        }
-
-        function renderTeam(team) {
-            document.getElementById('team-data').innerHTML = team.map((m, i) => `
-                <div class="creative-card" onclick="openProfile(${i})" style="text-align:center;">
-                    <img src="${m.Image || 'https://via.placeholder.com/150'}" class="team-img-blob">
-                    <h3>${m.Name}</h3>
-                    <p>${m.Role}</p>
-                </div>
-            `).join('');
-        }
-
-        function openProfile(i) {
-            const m = fullTeamData[i];
-            document.getElementById('modalImg').src = m.Image;
-            document.getElementById('modalName').innerText = m.Name;
-            document.getElementById('modalRole').innerText = m.Role;
-            document.getElementById('modalBio').innerText = m.Details || "শীঘ্রই আসছে।";
-            const modal = document.getElementById('profileModal');
-            modal.style.display = "flex";
-            setTimeout(() => modal.classList.add("active"), 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('profileModal');
-            modal.classList.remove("active");
-            setTimeout(() => modal.style.display = "none", 400);
-        }
-
-        window.onload = loadData;
-        window.onscroll = () => {
-            const nav = document.getElementById("navbar");
-            if(window.scrollY > 50) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        };
     </script>
 </body>
 </html>
