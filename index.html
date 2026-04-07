@@ -46,9 +46,9 @@
             line-height: 1.8; overflow-x: hidden;
         }
 
-        /* Custom Logo Sizing */
+        /* --- Custom Logo Sizing (Updated) --- */
         .logo img, .preloader-logo img, footer h2 img {
-            height: 40px; 
+            height: 70px; /* লোগোর সাইজ বড় করা হয়েছে (আগে 40px ছিল)। আরও বড় চাইলে 80px বা 90px করতে পারেন */
             width: auto;
             object-fit: contain;
             border-radius: 8px;
@@ -66,18 +66,20 @@
 
         /* Floating Nav */
         nav { 
-            position: fixed; top: 0; left: 0; width: 100%; padding: 25px 8%;
+            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 8%;
             background: transparent; display: flex; justify-content: space-between; align-items: center; 
             z-index: 10000; transition: var(--transition);
         }
-        nav.scrolled { padding: 15px 8%; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        nav.scrolled { padding: 12px 8%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         
         .logo { font-size: 1.8rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
         nav.scrolled .logo { color: var(--primary); }
         
-        .nav-right { display: flex; align-items: center; gap: 30px; }
-        .nav-links { display: flex; list-style: none; gap: 25px; }
-        .nav-links li a { text-decoration: none; color: #fff; font-weight: 600; transition: 0.3s; position: relative; }
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        
+        /* Desktop Menu */
+        .nav-links { display: flex; list-style: none; gap: 20px; }
+        .nav-links li a { text-decoration: none; color: #fff; font-weight: 600; font-size: 0.95rem; transition: 0.3s; position: relative; }
         nav.scrolled .nav-links li a { color: var(--text-dark); }
         .nav-links li a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--secondary); transition: 0.3s; }
         .nav-links li a:hover::after { width: 100%; }
@@ -85,8 +87,13 @@
         #lang-toggle { 
             background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4);
             border-radius: 30px; padding: 6px 18px; cursor: none; transition: 0.3s; backdrop-filter: blur(5px);
+            font-weight: 700; font-family: 'Outfit', sans-serif;
         }
         nav.scrolled #lang-toggle { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        /* Mobile Menu Toggle Button */
+        .menu-toggle { display: none; font-size: 28px; color: #fff; cursor: none; z-index: 10001; transition: 0.3s; }
+        nav.scrolled .menu-toggle { color: var(--primary); }
 
         /* Hero Section */
         .hero { 
@@ -154,20 +161,20 @@
             34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; } 
             67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; } 
         }
-        .creative-card.team-card { text-align: center; }
+        .creative-card.team-card { text-align: center; cursor: none; }
         .creative-card.team-card:hover .team-img-blob { transform: scale(1.1); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.3); border-color: var(--primary-light); }
 
         /* Team Details Modal */
         .modal { display: none; position: fixed; z-index: 300000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(17, 94, 89, 0.8); backdrop-filter: blur(10px); opacity: 0; transition: 0.4s; align-items: center; justify-content: center; }
         .modal.active { opacity: 1; }
-        .modal-content { background: #fff; width: 90%; max-width: 480px; border-radius: 40px; padding: 50px 40px; text-align: center; position: relative; transform: scale(0.9) translateY(30px); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+        .modal-content { background: #fff; width: 90%; max-width: 480px; border-radius: 40px; padding: 50px 40px; text-align: center; position: relative; transform: scale(0.9) translateY(30px); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 40px 80px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto; }
         .modal.active .modal-content { transform: scale(1) translateY(0); }
-        .close { position: absolute; right: 25px; top: 25px; font-size: 24px; color: var(--text-muted); transition: 0.3s; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-light); border: 1px solid rgba(0,0,0,0.05); }
+        .close { position: absolute; right: 25px; top: 25px; font-size: 24px; color: var(--text-muted); transition: 0.3s; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-light); border: 1px solid rgba(0,0,0,0.05); cursor: none; }
         .close:hover { color: var(--accent); background: rgba(244, 63, 94, 0.1); transform: rotate(90deg); }
         
         .modal-bio { margin-top: 25px; font-size: 1.05rem; color: var(--text-dark); background: var(--bg-light); padding: 25px; border-radius: 20px; text-align: left; line-height: 1.6; border-left: 4px solid var(--primary-light); }
         .social-btns { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
-        .s-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .s-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: none; }
         .s-btn:hover { transform: translateY(-5px) scale(1.1); }
 
         /* Help Portal */
@@ -176,13 +183,13 @@
             padding: 100px 5%; border-radius: 40px; margin: 50px 2%; color: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.2);
         }
         .help-form-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); padding: 50px; border-radius: 30px; max-width: 800px; margin: 0 auto; }
-        .form-control { width: 100%; padding: 18px 25px; margin-bottom: 25px; background: rgba(255,255,255,0.9); border: none; border-radius: 15px; font-size: 1.05rem; font-family: inherit; }
-        .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: #fff; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: 700; transition: var(--transition); }
+        .form-control { width: 100%; padding: 18px 25px; margin-bottom: 25px; background: rgba(255,255,255,0.9); border: none; border-radius: 15px; font-size: 1.05rem; font-family: inherit; cursor: none; }
+        .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: #fff; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: 700; transition: var(--transition); cursor: none; }
         .btn-submit:hover { background: #fff; color: var(--secondary); transform: scale(1.02); }
 
         /* Actions */
         .floating-actions { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 10000; }
-        .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: white; transition: 0.3s; text-decoration: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: white; transition: 0.3s; text-decoration: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2); cursor: none; }
         .fab-wa { background: #25D366; }
         .fab:hover { transform: scale(1.1) rotate(10deg); }
 
@@ -190,12 +197,38 @@
         .map-wrapper { border-radius: 30px; overflow: hidden; border: 10px solid #fff; box-shadow: var(--shadow-dream); }
         #impactMap { width: 100%; height: 500px; z-index: 1; }
 
+        /* --- Mobile Responsive Fixes & Mobile Menu --- */
         @media (max-width: 992px) {
-            .nav-links { display: none; }
+            .nav-links { 
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75vw;
+                height: 100vh;
+                background: rgba(17, 94, 89, 0.98);
+                backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 25px;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+                z-index: 9999;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li a { font-size: 1.4rem; color: #fff !important; }
+            .nav-links li a::after { background: #fff; }
+            
+            .menu-toggle { display: block; }
+            .nav-right { gap: 15px; }
+            
             .section { padding: 80px 5%; }
-            .magic-cursor, .magic-cursor-dot { display: none; }
+            .logo img, .preloader-logo img, footer h2 img { height: 50px; } /* লোগো মোবাইলে একটু মানানসই সাইজ */
+
+            /* Disable Custom Cursor on Mobile */
+            .magic-cursor, .magic-cursor-dot { display: none !important; }
             * { cursor: auto !important; }
-            .close { cursor: pointer; }
         }
     </style>
 </head>
@@ -216,13 +249,19 @@
             <img src="logo.png" alt="Logo"> <span data-i18n="logo">সহযাত্রী</span>
         </div>
         <div class="nav-right">
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#home" data-i18n="nav_home">হোম</a></li>
+                <li><a href="#notice" data-i18n="nav_notice">বিজ্ঞপ্তি</a></li>
                 <li><a href="#vision" data-i18n="nav_vision">লক্ষ্য</a></li>
                 <li><a href="#plan" data-i18n="nav_plan">পরিকল্পনা</a></li>
+                <li><a href="#leaderboard" data-i18n="nav_leaderboard">লিডারবোর্ড</a></li>
+                <li><a href="#help-portal" data-i18n="nav_help">সাহায্য</a></li>
+                <li><a href="#contribution" data-i18n="nav_contrib">অবদান</a></li>
                 <li><a href="#about" data-i18n="nav_team">টিম</a></li>
+                <li><a href="#location" data-i18n="nav_location">লোকেশন</a></li>
             </ul>
             <button id="lang-toggle" onclick="toggleLanguage()">EN</button>
+            <div class="menu-toggle" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
         </div>
     </nav>
 
@@ -231,7 +270,7 @@
         <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
         
         <div class="hero-content">
-            <h1 data-aos="zoom-out" data-aos-duration="2000" data-i18n="hero_title">শিশুদের সুন্দর আগামী শৈশব</h1>
+            <h1 data-aos="zoom-out" data-aos-duration="2000" data-i18n="hero_title">শিশুদের সুন্দর আগামী</h1>
             <p class="slogan-bn" data-aos="fade-up" data-aos-delay="500" data-i18n="slogan_bn">"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"</p>
         </div>
 
@@ -257,10 +296,32 @@
         <h2 class="section-title" data-aos="fade-up" data-i18n="sec_plan">আমাদের পরিকল্পনা</h2>
         <div id="plan-data" class="grid-container"></div>
     </section>
+    
+    <section id="leaderboard" class="section" style="background: #fff; border-radius: 40px; padding-bottom: 120px;">
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_leaderboard">সেরা স্বেচ্ছাসেবক</h2>
+        <p class="section-sub" data-i18n="leaderboard_sub">যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম</p>
+        <div class="grid-container" data-aos="fade-up">
+            <div class="creative-card" style="text-align: center;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #FFD700, #FDB931); margin: 0 auto 20px;"><i class="fas fa-trophy"></i></div>
+                <h3>তানভীরুজ্জামান নাফিস</h3>
+                <p data-i18n="leader_work1">সর্বাধিক প্রজেক্ট সম্পন্ন করেছেন</p>
+            </div>
+            <div class="creative-card" style="text-align: center;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #E0E0E0, #9E9E9E); margin: 0 auto 20px;"><i class="fas fa-medal"></i></div>
+                <h3>তৃণা মিত্র</h3>
+                <p data-i18n="leader_work2">সেরা ফান্ড রেইজার</p>
+            </div>
+            <div class="creative-card" style="text-align: center;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #CD7F32, #A0522D); margin: 0 auto 20px;"><i class="fas fa-award"></i></div>
+                <h3>Anamika Arna</h3>
+                <p data-i18n="leader_work3">সেরা ক্যাম্পেইন অর্গানাইজার</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="help-portal-wrapper" data-aos="fade-up">
-        <h2 style="text-align:center; font-size: 3rem; margin-bottom: 10px; font-weight:800;">সাহায্যের আবেদন</h2>
-        <p style="text-align:center; margin-bottom: 50px; font-size:1.2rem; opacity:0.9;">আপনার চারপাশে কোনো শিশুর চিকিৎসা বা শিক্ষার প্রয়োজন হলে আমাদের জানান</p>
+    <div id="help-portal" class="help-portal-wrapper" data-aos="fade-up">
+        <h2 style="text-align:center; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; font-weight:800;" data-i18n="sec_help">সাহায্যের আবেদন</h2>
+        <p style="text-align:center; margin-bottom: 50px; font-size:1.1rem; opacity:0.9;" data-i18n="help_sub">আপনার চারপাশে কোনো শিশুর চিকিৎসা বা শিক্ষার প্রয়োজন হলে আমাদের জানান</p>
         
         <div class="help-form-container" data-aos="zoom-in">
             <form action="https://formsubmit.co/yeasinkabir0000@gmail.com" method="POST">
@@ -274,6 +335,11 @@
                 <button type="submit" class="btn-submit" data-i18n="btn_submit">আবেদন জমা দিন <i class="fas fa-paper-plane" style="margin-left: 10px;"></i></button>
             </form>
         </div>
+    </div>
+    
+    <section id="contribution" class="section">
+        <h2 class="section-title" data-aos="fade-up" data-i18n="sec_contrib">আমাদের অবদান</h2>
+        <div id="contribution-data" class="grid-container"></div>
     </section>
 
     <section id="about" class="section" style="background: #fff; border-radius: 40px;">
@@ -330,15 +396,20 @@
             }, 1500); 
         });
 
-        // Translations Object
+        // Translations Object with all section items
         const translations = {
             bn: {
                 page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে",
                 logo: "সহযাত্রী",
-                nav_home: "হোম", nav_vision: "লক্ষ্য", nav_plan: "পরিকল্পনা", nav_team: "টিম",
+                nav_home: "হোম", nav_notice: "বিজ্ঞপ্তি", nav_vision: "লক্ষ্য", 
+                nav_plan: "পরিকল্পনা", nav_leaderboard: "লিডারবোর্ড", nav_help: "সাহায্য",
+                nav_contrib: "অবদান", nav_team: "টিম", nav_location: "লোকেশন",
                 hero_title: "শিশুদের সুন্দর আগামী", slogan_bn: '"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"',
                 sec_notice: "সর্বশেষ বিজ্ঞপ্তি", sec_vision: "আমাদের লক্ষ্য", sec_plan: "আমাদের পরিকল্পনা",
-                sec_team: "আমাদের কারিগর", sec_location: "কার্যক্রমের অবস্থান",
+                sec_leaderboard: "সেরা স্বেচ্ছাসেবক", leaderboard_sub: "যাদের নিরলস পরিশ্রমে এগিয়ে যাচ্ছে আমাদের কার্যক্রম",
+                leader_work1: "সর্বাধিক প্রজেক্ট সম্পন্ন করেছেন", leader_work2: "সেরা ফান্ড রেইজার", leader_work3: "সেরা ক্যাম্পেইন অর্গানাইজার",
+                sec_help: "সাহায্যের আবেদন", help_sub: "আপনার চারপাশে কোনো শিশুর চিকিৎসা বা শিক্ষার প্রয়োজন হলে আমাদের জানান",
+                sec_contrib: "আমাদের অবদান", sec_team: "আমাদের কারিগর", sec_location: "কার্যক্রমের অবস্থান",
                 team_sub: "যাদের হাত ধরে এগিয়ে যাচ্ছে 'সহযাত্রী' - বিস্তারিত জানতে ছবিতে ক্লিক করুন",
                 form_name: "আপনার নাম (ঐচ্ছিক)", form_area: "এলাকা / লোকেশন *", form_details: "সমস্যার বিস্তারিত বিবরণ লিখুন *", btn_submit: "আবেদন জমা দিন",
                 footer_text: "শিশুদের উন্নয়ন এবং একটি সুন্দর আগামী গড়ার প্রত্যয়ে আমরা কাজ করে যাচ্ছি।",
@@ -347,10 +418,15 @@
             en: {
                 page_title: "Shohojatri | Future With You",
                 logo: "Shohojatri",
-                nav_home: "Home", nav_vision: "Vision", nav_plan: "Plan", nav_team: "Team",
+                nav_home: "Home", nav_notice: "Notice", nav_vision: "Vision", 
+                nav_plan: "Plan", nav_leaderboard: "Awards", nav_help: "Help",
+                nav_contrib: "Impact", nav_team: "Team", nav_location: "Location",
                 hero_title: "Beautiful Future for Children", slogan_bn: '"A beautiful childhood will change the world"',
                 sec_notice: "Latest Notice", sec_vision: "Our Vision", sec_plan: "Our Plan",
-                sec_team: "Our Team", sec_location: "Our Locations",
+                sec_leaderboard: "Top Volunteers", leaderboard_sub: "Those whose relentless hard work is driving our activities forward",
+                leader_work1: "Completed Most Projects", leader_work2: "Best Fundraiser", leader_work3: "Best Campaign Organizer",
+                sec_help: "Request Help", help_sub: "Let us know if any child needs medical or educational assistance",
+                sec_contrib: "Our Impact", sec_team: "Our Team", sec_location: "Our Locations",
                 team_sub: "Click on a photo to learn more about the people driving Shohojatri",
                 form_name: "Your Name (Optional)", form_area: "Area / Location *", form_details: "Enter problem description *", btn_submit: "Submit Request",
                 footer_text: "We are working to develop children and build a beautiful future.",
@@ -358,7 +434,32 @@
             }
         };
 
-        // Custom Magic Cursor Logic
+        // --- Mobile Menu Toggle Logic ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const menuIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            if(navLinks.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links li a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        // Custom Magic Cursor Logic (Disabled on mobile via CSS)
         const cursor = document.getElementById('cursor');
         const cursorDot = document.getElementById('cursor-dot');
         
@@ -369,7 +470,7 @@
             cursorDot.style.top = e.clientY + 'px';
         });
 
-        document.querySelectorAll('a, button, input, textarea, .creative-card, .close').forEach(el => {
+        document.querySelectorAll('a, button, input, textarea, .creative-card, .close, .menu-toggle').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.transform = 'translate(-50%, -50%) scale(2)';
                 cursor.style.background = 'rgba(245, 158, 11, 0.1)';
@@ -402,6 +503,7 @@
                 renderGeneral(data, 'Notice', 'notice-data');
                 renderGeneral(data, 'Vision', 'vision-data');
                 renderGeneral(data, 'Plan', 'plan-data');
+                renderGeneral(data, 'Contribution', 'contribution-data');
                 
                 fullTeamData = data.filter(i => i.Category === 'Team');
                 renderTeam(fullTeamData);
