@@ -46,9 +46,9 @@
             line-height: 1.8; overflow-x: hidden;
         }
 
-        /* --- Custom Logo Sizing (Updated) --- */
+        /* Custom Logo Sizing */
         .logo img, .preloader-logo img, footer h2 img {
-            height: 70px; /* লোগোর সাইজ বড় করা হয়েছে (আগে 40px ছিল)। আরও বড় চাইলে 80px বা 90px করতে পারেন */
+            height: 70px; 
             width: auto;
             object-fit: contain;
             border-radius: 8px;
@@ -116,9 +116,63 @@
         .hero h1 { font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.1; text-shadow: 0 15px 30px rgba(0,0,0,0.4); }
         .hero .slogan-bn { font-size: clamp(1.2rem, 3vw, 2.2rem); font-weight: 400; color: var(--secondary); font-style: italic; margin-bottom: 20px; }
         
-        .wave-bottom { position: absolute; bottom: -1px; left: 0; width: 100%; z-index: 5; line-height: 0; }
-        .wave-bottom svg { display: block; width: calc(100% + 1.3px); height: 120px; }
-        .wave-bottom .shape-fill { fill: var(--bg-light); }
+        /* 3D Parallax Ocean & Realistic Boat CSS */
+        .ocean {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            z-index: 5;
+            overflow: hidden;
+        }
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            line-height: 0;
+        }
+        .wave svg { width: 100%; height: 100%; }
+        
+        .wave-back { z-index: 1; bottom: 15px; animation: waveMove 18s linear infinite reverse; opacity: 0.7; }
+        .wave-back .shape-fill { fill: var(--bg-light); }
+        
+        .wave-front { z-index: 3; bottom: 0; animation: waveMove 12s linear infinite; }
+        .wave-front .shape-fill { fill: var(--bg-light); }
+
+        .nouka-container {
+            position: absolute;
+            bottom: 15px; 
+            left: -250px;
+            width: 250px;
+            height: 150px;
+            z-index: 2;
+            animation: sailAcross 25s linear infinite, bobbing 3s ease-in-out infinite;
+        }
+
+        .animated-oar {
+            transform-origin: 50px 80px;
+            animation: rowOar 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes sailAcross {
+            0% { left: -300px; }
+            100% { left: 100vw; }
+        }
+        @keyframes bobbing {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+        @keyframes rowOar {
+            0% { transform: rotate(-20deg); }
+            100% { transform: rotate(25deg); }
+        }
 
         /* Sections */
         .section { padding: 120px 5%; max-width: 1350px; margin: 0 auto; position: relative; }
@@ -197,24 +251,14 @@
         .map-wrapper { border-radius: 30px; overflow: hidden; border: 10px solid #fff; box-shadow: var(--shadow-dream); }
         #impactMap { width: 100%; height: 500px; z-index: 1; }
 
-        /* --- Mobile Responsive Fixes & Mobile Menu --- */
+        /* Mobile Responsive Fixes */
         @media (max-width: 992px) {
             .nav-links { 
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 75vw;
-                height: 100vh;
-                background: rgba(17, 94, 89, 0.98);
-                backdrop-filter: blur(20px);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 25px;
-                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.3);
-                z-index: 9999;
+                position: fixed; top: 0; right: -100%; width: 75vw; height: 100vh;
+                background: rgba(17, 94, 89, 0.98); backdrop-filter: blur(20px);
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                gap: 25px; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.3); z-index: 9999;
             }
             .nav-links.active { right: 0; }
             .nav-links li a { font-size: 1.4rem; color: #fff !important; }
@@ -224,7 +268,7 @@
             .nav-right { gap: 15px; }
             
             .section { padding: 80px 5%; }
-            .logo img, .preloader-logo img, footer h2 img { height: 50px; } /* লোগো মোবাইলে একটু মানানসই সাইজ */
+            .logo img, .preloader-logo img, footer h2 img { height: 50px; }
 
             /* Disable Custom Cursor on Mobile */
             .magic-cursor, .magic-cursor-dot { display: none !important; }
@@ -274,10 +318,35 @@
             <p class="slogan-bn" data-aos="fade-up" data-aos-delay="500" data-i18n="slogan_bn">"একটি সুন্দর শৈশবই বদলে দেবে আগামীর পৃথিবী"</p>
         </div>
 
-        <div class="wave-bottom">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C-1,95.8,110.15,116.48,220.6,116.48,255.4,116.48,289.8,103.8,321.39,56.44Z" class="shape-fill"></path>
-            </svg>
+        <div class="ocean">
+            <div class="wave wave-back">
+                <svg viewBox="0 0 2400 120" preserveAspectRatio="none">
+                    <path d="M0,60 C300,120 300,0 600,60 C900,120 900,0 1200,60 C1500,120 1500,0 1800,60 C2100,120 2100,0 2400,60 V120 H0 Z" class="shape-fill"></path>
+                </svg>
+            </div>
+            
+            <div class="nouka-container">
+                <svg class="nouka" viewBox="0 0 250 150" xmlns="http://www.w3.org/2000/svg">
+                    <g class="animated-oar">
+                        <line x1="50" y1="80" x2="20" y2="135" stroke="#4A3018" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M 15 125 Q 25 145 20 150 Q 10 140 15 125 Z" fill="#4A3018"/>
+                    </g>
+
+                    <path d="M 40 100 C 40 70, 60 70, 60 100 Z" fill="#8B4513"/> <circle cx="50" cy="65" r="10" fill="#CD853F"/> <path d="M 35 65 L 65 65 L 50 48 Z" fill="#D2B48C"/> 
+                    <path d="M 50 75 Q 60 85 55 90" stroke="#CD853F" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+                    <path d="M 10 100 Q 125 140 240 90 L 210 85 Q 125 120 30 95 Z" fill="#4E311A"/> <path d="M 15 95 Q 125 125 220 85 L 200 80 Q 125 110 35 90 Z" fill="#8B5A2B"/> <path d="M 80 85 Q 135 25 190 80 Z" fill="#DAA520"/> <path d="M 90 82 Q 135 35 180 78" stroke="#B8860B" stroke-width="2" fill="none"/>
+                    <path d="M 100 80 Q 135 45 170 76" stroke="#B8860B" stroke-width="2" fill="none"/>
+                    <path d="M 110 78 Q 135 55 160 75" stroke="#B8860B" stroke-width="2" fill="none"/>
+                    <path d="M 80 85 L 190 80 L 190 85 Q 135 125 80 85 Z" fill="#2E1D11" opacity="0.6"/> 
+                </svg>
+            </div>
+
+            <div class="wave wave-front">
+                <svg viewBox="0 0 2400 120" preserveAspectRatio="none">
+                    <path d="M0,60 C300,0 300,120 600,60 C900,0 900,120 1200,60 C1500,0 1500,120 1800,60 C2100,0 2100,120 2400,60 V120 H0 Z" class="shape-fill"></path>
+                </svg>
+            </div>
         </div>
     </section>
 
@@ -397,7 +466,7 @@
             }, 1500); 
         });
 
-        // Translations Object with all section items
+        // Translations Object
         const translations = {
             bn: {
                 page_title: "সহযাত্রী | আগামীর পথে আপনার সাথে",
@@ -435,7 +504,7 @@
             }
         };
 
-        // --- Mobile Menu Toggle Logic ---
+        // Mobile Menu Logic
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
         const menuIcon = mobileMenuBtn.querySelector('i');
@@ -451,7 +520,6 @@
             }
         });
 
-        // Close mobile menu when a link is clicked
         document.querySelectorAll('.nav-links li a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -460,7 +528,7 @@
             });
         });
 
-        // Custom Magic Cursor Logic (Disabled on mobile via CSS)
+        // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
         const cursorDot = document.getElementById('cursor-dot');
         
@@ -492,7 +560,7 @@
             else nav.classList.remove('scrolled');
         };
 
-        // Data Fetching and Rendering
+        // Data Fetching
         const API_URL = 'https://sheetdb.io/api/v1/olrk5ma2200zy'; 
         let fullTeamData = []; 
         
@@ -608,23 +676,21 @@
             });
         }
 
-        // --- AJAX Form Submission Logic (NEW) ---
+        // AJAX Form Submission Logic
         const helpForm = document.getElementById('helpForm');
         const submitBtn = document.getElementById('submitBtn');
         const formStatus = document.getElementById('formStatus');
 
         if(helpForm) {
             helpForm.addEventListener('submit', function(e) {
-                e.preventDefault(); // Default submission বন্ধ করবে
+                e.preventDefault(); 
                 
-                // বাটনটিকে লোডিং স্টেটে নিয়ে যাওয়া
                 const originalBtnText = submitBtn.innerHTML;
                 submitBtn.innerHTML = 'অপেক্ষা করুন... <i class="fas fa-spinner fa-spin" style="margin-left: 10px;"></i>';
                 submitBtn.disabled = true;
                 
                 const formData = new FormData(this);
                 
-                // Formsubmit-এর AJAX endpoint-এ রিকোয়েস্ট পাঠানো
                 fetch("https://formsubmit.co/ajax/yeasinkabir0000@gmail.com", {
                     method: "POST",
                     body: formData,
@@ -638,7 +704,7 @@
                     if(data.success) {
                         formStatus.style.color = 'var(--primary)';
                         formStatus.innerText = 'ধন্যবাদ! আপনার আবেদনটি সফলভাবে জমা হয়েছে।';
-                        helpForm.reset(); // ফর্মের লেখাগুলো মুছে দেওয়া
+                        helpForm.reset(); 
                     } else {
                         formStatus.style.color = 'var(--accent)';
                         formStatus.innerText = 'দুঃখিত, কোনো একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।';
@@ -651,11 +717,9 @@
                     console.error('Error submitting form:', error);
                 })
                 .finally(() => {
-                    // বাটন আগের অবস্থায় ফিরিয়ে আনা
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                     
-                    // ৫ সেকেন্ড পর সাকসেস মেসেজ হাইড করে দেওয়া
                     setTimeout(() => { 
                         formStatus.style.display = 'none'; 
                     }, 5000); 
